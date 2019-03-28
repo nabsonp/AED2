@@ -5,10 +5,14 @@
 
 int main() {
   int  pesq = 30, tam = 100000, val[pesq], i;
+  printf("Alocar 2 vetores de 100K.\n");
+  scanf("%d", &i);
   int *v = (int*) malloc(sizeof(int)*tam), *aux = (int*) malloc(sizeof(int)*tam);
   float mediaInsertion = 0, mediaBubble = 0, mediaQuick = 0, tempoInsertion[pesq], tempoBubble[pesq], tempoQuick[pesq];
   FILE *arq = fopen("questao03.txt","w");
   clock_t t0;
+  printf("Início das ordenações.\n");
+  scanf("%d", &i);
   for (i=0; i<pesq; i++){
     getVetorDesordenado(tam, v);
     // Insertion Sort
@@ -55,7 +59,13 @@ int main() {
   fprintf(arq, "\n\nTempo médio das ordenações com Bolha: %f", mediaBubble);
   fprintf(arq, "\nTempo médio das ordenações com Quick: %f", mediaQuick);
   fclose(arq);
+  printf("Libera um vetor de 100K.\n");
+  scanf("%d", &i);
   free(aux);
+  printf("Libera outro vetor de 100K.\n");
+  scanf("%d", &i);
   free(v);
+  printf("Finalizar processo.\n");
+  scanf("%d", &i);
   return 0;
 }

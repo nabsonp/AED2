@@ -22,3 +22,5 @@ void listaDesordenada(tipoLista *l, int tam);
 void converteVetor(tipoLista *l, int tam, int vet[]);
 
 tipoNo* buscaSequencialLista(tipoLista l, int valor);
+
+void dropLista(tipoLista *l);

@@ -12,7 +12,6 @@ int inserir(tipoLista *l, tipoDados d) {
     aux->d = d;
     aux->prox = l->prim;
     l->prim = aux;
-    free(aux);
     return 1;
   } else {
     free(aux);
@@ -85,4 +84,14 @@ tipoNo* buscaSequencialLista(tipoLista l, int valor) {
     l.prim = l.prim->prox;
   }
   return l.prim;
+}
+
+void dropLista(tipoLista *l) {
+  tipoNo *aux;
+  while (l->prim != NULL) {
+    aux = l->prim;
+    l->prim = aux->prox;
+    free(aux);
+  }
+  l->prim = NULL;
 }

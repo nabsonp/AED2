@@ -1,0 +1,38 @@
+********Questão 01********
+Uso de memória do processo por etapa:
+  Memória inicial: 64 KB
+  Com vetor de 1M alocado: 64 KB
+  Vetor de 1M preenchido: 3,9 MB
+  Fim das buscas: 3,9 MB
+  Depois de vetor de 1M liberado: 84 KB
+
+- O menor tamanho foi quando iniciou, com 64 KB.
+- O maior foi quando o vetor de 1M foi alocado, com 3,9 MB.
+- As maiores variações ocorreram quando o vetor foi alocado e liberado.
+
+********Questão 02********
+Uso de memória do processo por etapa:
+  Memória inicial: 64 KB
+  Com vetor de 1M alocado: 64 KB
+  Vetor de 1M preenchido: 3,9 MB
+  Lista criada a partir do vetor: 34,3 MB
+  Fim das buscas: 34,3 MB
+  Depois de vetor de 1M liberado: 30,6 KB
+  Elementos da lista eliminados: 30,6
+
+- O menor tamanho foi quando iniciou, com 64 KB.
+- O maior foi quando o vetor de 1M foi convertido em lista, com 34,3 MB.
+- A maior variação foi quando a lista foi criada.
+
+********Questão 03********
+Uso de memória do processo por etapa:
+  Memória inicial: 64 KB
+  Com dois vetores de 100K alocados: 64 KB
+  Início das ordenações: 800 KB
+  Fim das ordenações: 800 KB
+  Depois de um vetor de 100K liberado: 476 KB
+  Depois de outro vetor de 100K liberado: 84 KB
+
+- O menor tamanho foi quando iniciou, com 64 KB.
+- O maior foi quando os dois vetores de 100K foram preenchidos, com 800 KB.
+- A maior variação foi quando os vetores foram criados e liberados.
