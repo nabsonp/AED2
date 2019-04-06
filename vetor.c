@@ -4,9 +4,9 @@
 int* getVetorOrdenado(int tam, int vet[]) {
   time_t t;
   srand((unsigned) time(&t));
-  vet[0] = rand()%100;
+  vet[0] = rand()%20;
   for (int i=1; i<tam; i++) {
-    vet[i] = vet[i-1] + (int) rand()%1000;
+    vet[i] = vet[i-1] + (int) rand()%20;
   }
 }
 
