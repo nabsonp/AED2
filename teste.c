@@ -12,6 +12,12 @@ int main() {
     inserirEmABP(raiz, d);
     d = 88;
     inserirEmABP(raiz, d);
+    printf("Caminhamento pré-fixado: ");
+    caminhamentoPrefixado(raiz);
+    printf("\nCaminhamento infixado: ");
     caminhamentoInfixado(raiz);
+    printf("\nCaminhamento pós-fixado: ");
+    caminhamentoPosfixado(raiz);
+    printf("\n");
     return 0;
 }
