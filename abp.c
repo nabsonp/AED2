@@ -27,8 +27,7 @@ void caminhamentoPrefixado(no *r){
     }
 }
 
-
-{
+void caminhamentoInfixado(no *r){
     if (r != NULL) {
         caminhamentoPrefixado(r->esq);
         printf("%d ",r->d);
