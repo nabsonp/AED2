@@ -50,9 +50,8 @@ void caminhamentoPosfixado(no *r){
 
 int alturaArvore(no* n) {
     if (n) {
-        int e = 1 + alturaArvore(n->esq), d = 1 + alturaArvore(n->dir);
-        if (e > d) return e;
-        else return d;
+        int e = alturaArvore(n->esq), d = alturaArvore(n->dir);
+        return d > e ? ++d : ++e;
     } else
         return 0;
 }
@@ -101,17 +100,20 @@ no* rotacaoDuplaDir( no *n ) {
 
 no* balanceiaNo( no *n ) {
 	no *newroot = NULL;
-	if( n->esq ) n->esq  = balanceiaNo(n->esq);
-	if( n->dir ) n->dir = balanceiaNo(n->dir);
-	int bf = fb(n);
-	if( bf <= -2 ) {
-		if( fb( n->esq ) <= -1 ) newroot = rotacaoSimplesEsq(n);
-		else newroot = rotacaoDuplaEsq(n);
-	} else if( bf >= 2 ) {
-		if( fb( n->dir ) >= 1 ) newroot = rotacaoSimplesDir(n);
-		else newroot = rotacaoDuplaDir(n);
-	} else {
-		newroot = n;
-	}
+    if (n) {
+    	if( n->esq ) n->esq  = balanceiaNo(n->esq);
+    	if( n->dir ) n->dir = balanceiaNo(n->dir);
+    	int bf = fb(n);
+        printf("%d\n", bf);
+    	if( bf <= -2 ) {
+    		if( fb( n->esq ) <= -1 ) newroot = rotacaoSimplesEsq(n);
+    		else newroot = rotacaoDuplaEsq(n);
+    	} else if( bf >= 2 ) {
+    		if( fb( n->dir ) >= 1 ) newroot = rotacaoSimplesDir(n);
+    		else newroot = rotacaoDuplaDir(n);
+    	} else {
+    		newroot = n;
+    	}
+    }
 	return newroot;
 }
