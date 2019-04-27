@@ -2,12 +2,7 @@
 #include <stdio.h>
 
 int main() {
-    no *raiz;
-    criarArvore(raiz);
-    raiz = inserirEmABP(raiz, 5);
-    inserirEmABP(raiz, 4);
-    inserirEmABP(raiz, 2);
-    inserirEmABP(raiz, 6);
+    no *raiz = criarArvoreAleatoria(raiz,50);
     printf("Caminhamento pré-fixado: ");
     caminhamentoPrefixado(raiz);
     printf("\nCaminhamento infixado: ");
