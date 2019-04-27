@@ -13,3 +13,5 @@ void caminhamentoPrefixado(no *r);
 void caminhamentoInfixado(no *r);
 
 void caminhamentoPosfixado(no *r);
+
+no* criarArvoreAleatoria(no* r, int tam);

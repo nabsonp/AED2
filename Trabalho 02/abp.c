@@ -1,6 +1,7 @@
 #include "abp.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void criarArvore(no *r) {
     r = NULL;
@@ -41,4 +42,14 @@ void caminhamentoPosfixado(no *r){
         caminhamentoPosfixado(r->dir);
         printf("%d ",r->d);
     }
+}
+
+no* criarArvoreAleatoria(no* r, int tam) {
+  time_t t;
+  srand((unsigned) time(&t));
+  r = inserirEmABP(r, rand()%tam);
+  for (int i=1; i<tam; i++) {
+    inserirEmABP(r, rand()%tam);
+  }
+  return r;
 }
