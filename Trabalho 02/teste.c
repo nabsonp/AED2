@@ -3,10 +3,11 @@
 
 int main() {
     no *raiz;
-    criarArvore(raiz);
+    raiz = criarArvore();
     raiz = inserirEmAVL(raiz, 5);
-    inserirEmAVL(raiz, 4);
-    inserirEmAVL(raiz, 2);
+    raiz = inserirEmAVL(raiz, 8);
+    raiz = inserirEmAVL(raiz, 55);
+    raiz = inserirEmAVL(raiz, 555);
     printf("Caminhamento pré-fixado: ");
     caminhamentoPrefixado(raiz);
     printf("\nAltura: %d\n", alturaArvore(raiz));

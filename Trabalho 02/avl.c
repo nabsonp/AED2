@@ -2,34 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void criarArvore(no *r) {
-    r = NULL;
-}
-
-no* inserirAVL(no *raiz, no *n, int d){
-    if (n != NULL) {
-        if (d < n->d) n->esq = inserirAVL(raiz,n->esq,d);
-        else n->dir = inserirAVL(raiz,n->dir,d);
-    } else {
-        n = (no *) malloc(sizeof(no));
-        n->d = d;
-        n->esq = NULL;
-        n->dir = NULL;
-        raiz = balanceiaNo(raiz);
-    }
-    return n;
-}
-
 no* inserirEmAVL(no *r, int d){
-    return inserirAVL(r, r, d);
-}
-
-int alturaArvore(no* n) {
-    if (n) {
-        int e = alturaArvore(n->esq), d = alturaArvore(n->dir);
-        return d > e ? ++d : ++e;
-    } else
-        return 0;
+  r = inserirEmABP(r, d);
+  if (r != NULL) return balanceiaNo(r);
+  else return r;
 }
 
 int  fb(no *n) {
@@ -89,7 +65,14 @@ no* balanceiaNo( no *n ) {
   	} else {
   		newroot = n;
   	}
-    printf("Valor do newroot: %d\n", newroot->d);
   }
 	return newroot;
+}
+
+no* converterVetorAVL(no* r, int tam, int vet[]) {
+  r = inserirEmAVL(r,vet[0]);
+  for (int i=1; i < tam; i++) {
+    r = inserirEmAVL(r,vet[i]);
+  }
+  return r;
 }

@@ -23,3 +23,5 @@ no* recebimentoDePacotes(no* r, int tam, int pacotes[]);
 no* converterVetorABP(no* r, int tam, int vet[]);
 
 no* buscaABP(no *r, int v);
+
+int alturaArvore(no* n);

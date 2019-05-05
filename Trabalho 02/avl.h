@@ -1,15 +1,9 @@
-typedef struct no {
-    int d;
-    struct no *esq;
-    struct no *dir;
-} no;
-
-void criarArvore(no *r);
+#include "abp.h"
 
 no* inserirEmAVL(no *r, int d);
 
-int alturaArvore(no* n);
-
-int  fb(no *n);
+int fb(no *n);
 
 no* balanceiaNo(no* raiz);
+
+no* converterVetorAVL(no* r, int tam, int vet[]);

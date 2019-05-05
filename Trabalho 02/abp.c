@@ -28,6 +28,14 @@ no* buscaABP(no *r, int v) {
   } else return NULL;
 }
 
+int alturaArvore(no* n) {
+    if (n) {
+        int e = alturaArvore(n->esq), d = alturaArvore(n->dir);
+        return d > e ? ++d : ++e;
+    } else
+        return 0;
+}
+
 void caminhamentoPrefixado(no *r){
     if (r != NULL) {
         printf("%d ",r->d);
@@ -99,7 +107,7 @@ no* recebimentoDePacotes(no* r, int tam, int pacotes[]) {
 no* converterVetorABP(no* r, int tam, int vet[]) {
   r = inserirEmABP(r,vet[0]);
   for (int i=1; i < tam; i++) {
-    inserirEmABPSemRepeticao(r,vet[i]);
+    inserirEmABP(r,vet[i]);
   }
   return r;
 }
