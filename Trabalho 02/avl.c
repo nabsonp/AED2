@@ -24,30 +24,6 @@ no* inserirEmAVL(no *r, int d){
     return inserirAVL(r, r, d);
 }
 
-void caminhamentoPrefixado(no *r){
-    if (r != NULL) {
-        printf("%d ",r->d);
-        caminhamentoPrefixado(r->esq);
-        caminhamentoPrefixado(r->dir);
-    }
-}
-
-void caminhamentoInfixado(no *r){
-    if (r != NULL) {
-        caminhamentoInfixado(r->esq);
-        printf("%d ",r->d);
-        caminhamentoInfixado(r->dir);
-    }
-}
-
-void caminhamentoPosfixado(no *r){
-    if (r != NULL) {
-        caminhamentoPosfixado(r->esq);
-        caminhamentoPosfixado(r->dir);
-        printf("%d ",r->d);
-    }
-}
-
 int alturaArvore(no* n) {
     if (n) {
         int e = alturaArvore(n->esq), d = alturaArvore(n->dir);

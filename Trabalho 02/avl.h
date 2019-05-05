@@ -8,12 +8,6 @@ void criarArvore(no *r);
 
 no* inserirEmAVL(no *r, int d);
 
-void caminhamentoPrefixado(no *r);
-
-void caminhamentoInfixado(no *r);
-
-void caminhamentoPosfixado(no *r);
-
 int alturaArvore(no* n);
 
 int  fb(no *n);

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-void criarArvore(no *r) {
-    r = NULL;
+no* criarArvore() {
+    return NULL;
 }
 
 no* inserirEmABP(no *r, int d){
@@ -18,6 +18,14 @@ no* inserirEmABP(no *r, int d){
         r->dir = NULL;
     }
     return r;
+}
+
+no* buscaABP(no *r, int v) {
+  if (r != NULL) {
+    if (v < r->d) return buscaABP(r->esq,v);
+    else if (v > r->d) return buscaABP(r->dir,v);
+    else return r;
+  } else return NULL;
 }
 
 void caminhamentoPrefixado(no *r){
@@ -47,9 +55,42 @@ void caminhamentoPosfixado(no *r){
 no* criarArvoreAleatoria(no* r, int tam) {
   time_t t;
   srand((unsigned) time(&t));
-  r = inserirEmABP(r, rand()%tam);
+  r = inserirEmABP(r, rand()%100000);
   for (int i=1; i<tam; i++) {
-    inserirEmABP(r, rand()%tam);
+    if (inserirEmABP(r, rand()%100000) == NULL) i--;
+  }
+  return r;
+}
+
+no* inserirEmABPSemRepeticao(no *r, int d){
+    if (r != NULL) {
+        if (d < r->d) r->esq = inserirEmABP(r->esq,d);
+        else if (d > r->d) r->dir = inserirEmABP(r->dir,d);
+        else return NULL;
+    } else {
+        r = (no *) malloc(sizeof(no));
+        r->d = d;
+        r->esq = NULL;
+        r->dir = NULL;
+    }
+    return r;
+}
+
+no* recebimentoDePacotes(no* r, int tam, int pacotes[]) {
+  int d, i = 1;
+  time_t t;
+  srand((unsigned) time(&t));
+  r = inserirEmABP(r, pacotes[0]);
+  for (;i < tam;i++) {
+    inserirEmABPSemRepeticao(r, pacotes[i]);
+  }
+  return r;
+}
+
+no* converterVetorABP(no* r, int tam, int vet[]) {
+  r = inserirEmABP(r,vet[0]);
+  for (int i=1; i < tam; i++) {
+    inserirEmABPSemRepeticao(r,vet[i]);
   }
   return r;
 }

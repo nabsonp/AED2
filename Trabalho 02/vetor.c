@@ -1,7 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 
-int* getVetorOrdenado(int tam, int vet[]) {
+int* gerarVetorOrdenado(int tam, int vet[]) {
   time_t t;
   srand((unsigned) time(&t));
   vet[0] = rand()%20;
@@ -10,7 +11,7 @@ int* getVetorOrdenado(int tam, int vet[]) {
   }
 }
 
-void getVetPesquisa(int tamP, int pesq[], int tamV, int vet[]) {
+void gerarVetPesquisa(int tamP, int pesq[], int tamV, int vet[]) {
   int i;
   time_t t;
   srand((unsigned) time(&t));
@@ -22,7 +23,7 @@ void getVetPesquisa(int tamP, int pesq[], int tamV, int vet[]) {
   }
 }
 
-int* getVetorDesordenado(int tam, int vet[]) {
+int* gerarVetorDesordenado(int tam, int vet[]) {
   time_t t;
   srand((unsigned) time(&t));
   for (int i=1; i<tam; i++) {
@@ -113,4 +114,36 @@ void quickInterno(int vet[], int in, int fim) {
 
 void quickSort(int tam, int vet[]) {
   quickInterno(vet, 0, tam-1);
+}
+
+void gerarVetorParcialmenteOrdenado(int tam, int vet[]) {
+  time_t t;
+  srand((unsigned) time(&t));
+  int aux = tam*0.2, i = 1;
+  vet[0] = rand()%20;
+  for (; i<aux; i++) {
+    vet[i] =  i + rand()%aux;
+  }
+  aux = tam*0.4;
+  for (; i <aux; i++){
+    vet[i] = rand()%aux;
+  }
+  aux = tam*0.6;
+  for (; i<aux; i++) {
+    vet[i] =  i + rand()%aux;
+  }
+  aux = tam*0.6;
+  for (; i <tam*0.8; i++){
+    vet[i] = rand()%aux;
+  }
+  for (; i<tam; i++) {
+    vet[i] =  i + rand()%aux;
+  }
+}
+
+void percorrerVetor(int tam, int vet[]) {
+  for (int i=0; i<tam; i++) {
+    printf("%d ", vet[i]);
+  }
+  printf("\n");
 }
