@@ -19,3 +19,5 @@ void quickSort(int tam, int vet[]);
 void gerarVetorParcialmenteOrdenado(int tam, int vet[]);
 
 void percorrerVetor(int tam, int vet[]);
+
+int* gerarVetorDesordenadoSemRepeticoes(int tam, int vet[]);

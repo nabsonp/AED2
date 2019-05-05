@@ -56,6 +56,17 @@ int buscaBinaria(int tam, int vet[], int valor) {
   return -1;
 }
 
+int* gerarVetorDesordenadoSemRepeticoes(int tam, int vet[]) {
+  time_t t;
+  int aux;
+  srand((unsigned) time(&t));
+  for (int i=1; i<tam; i++) {
+    aux = rand()%tam;
+    if (buscaBinaria(tam,vet,aux) == -1) vet[i] = aux;
+    else i--;
+  }
+}
+
 void duplica(int tam, int vet[], int cpy[]) {
   for (int i=0; i< tam; i++)
     cpy[i] = vet[i];
