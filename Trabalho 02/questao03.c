@@ -11,7 +11,7 @@ int main() {
     printf("Início do processo: 64 KB ");
     scanf("%d", &e);
 
-    gerarVetorDesordenado(tam, vet);
+    gerarVetorDesordenadoSemRepeticoes(tam, vet);
     gerarVetPesquisa(tamBusca,busca,tam,vet);
     printf("Vetor de 1M e de busca criados: 3.9 MB ");
     scanf("%d", &e);
