@@ -62,6 +62,15 @@ no* criarArvoreAleatoria(no* r, int tam) {
   return r;
 }
 
+no* explodirArvore(no* r) {
+  if (r != NULL) {
+    explodirArvore(r->esq);
+    explodirArvore(r->dir);
+    free(r);
+  }
+  return NULL;
+}
+
 no* inserirEmABPSemRepeticao(no *r, int d){
     if (r != NULL) {
         if (d < r->d) r->esq = inserirEmABP(r->esq,d);

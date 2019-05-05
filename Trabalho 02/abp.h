@@ -14,6 +14,8 @@ void caminhamentoInfixado(no *r);
 
 void caminhamentoPosfixado(no *r);
 
+no* explodirArvore(no* r);
+
 no* criarArvoreAleatoria(no* r, int tam);
 
 no* recebimentoDePacotes(no* r, int tam, int pacotes[]);
