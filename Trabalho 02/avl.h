@@ -1,9 +1,22 @@
-#include "abp.h"
+typedef struct noAVL {
+    int d;
+    int altura;
+    struct noAVL *esq;
+    struct noAVL *dir;
+} noAVL;
 
-no* inserirEmAVL(no *r, int d);
+noAVL* criarAVL();
 
-int fb(no *n);
+noAVL* inserirEmAVL(noAVL *r, int d);
 
-no* balanceiaNo(no* raiz);
+int fb(noAVL *n);
 
-no* converterVetorAVL(no* r, int tam, int vet[]);
+noAVL* balanceianoAVL(noAVL* raiz);
+
+noAVL* converterVetorAVL(noAVL* r, int tam, int vet[]);
+
+noAVL* buscaAVL(noAVL *r, int v);
+
+int alturaAVL(noAVL* n);
+
+noAVL* dropAVL(noAVL *r);

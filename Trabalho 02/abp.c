@@ -20,6 +20,14 @@ no* inserirEmABP(no *r, int d){
     return r;
 }
 
+int alturaArvore(no* n) {
+    if (n) {
+        int e = alturaArvore(n->esq), d = alturaArvore(n->dir);
+        return d > e ? ++d : ++e;
+    } else
+        return 0;
+}
+
 no* buscaABP(no *r, int v) {
   if (r != NULL) {
     if (v < r->d) return buscaABP(r->esq,v);
@@ -28,12 +36,13 @@ no* buscaABP(no *r, int v) {
   } else return NULL;
 }
 
-int alturaArvore(no* n) {
-    if (n) {
-        int e = alturaArvore(n->esq), d = alturaArvore(n->dir);
-        return d > e ? ++d : ++e;
-    } else
-        return 0;
+no* dropABP(no *r) {
+  if (r != NULL) {
+    r->esq = dropABP(r->esq);
+    r->dir = dropABP(r->dir);
+    free(r);
+  }
+  return NULL;
 }
 
 void caminhamentoPrefixado(no *r){
