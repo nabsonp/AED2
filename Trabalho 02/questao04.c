@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "abp.h"
 #include "avl.h"
 #include "vetor.h"
 int main() {
-  int tam = 1000000, vet[tam], tamBusca = 30, busca[tamBusca], arvores = 10, i, j;
+  int tam = 1000000, *vet, tamBusca = 30, *busca, arvores = 10, i, j;
   float aux, tempoMedioBuscaABP = 0, tempoMedioBuscaAVL = 0, tempoMedioCriacaoABP = 0, tempoMedioCriacaoAVL = 0;
   clock_t t0;
-  no *abp = criarArvore(), *avl = criarArvore();
+  vet = (int*) malloc(tam*sizeof(int));
+  busca = (int*) malloc(tamBusca*sizeof(int));
+  no *abp = criarArvore();
+  noAVL *avl = criarAVL();
 
   for (i=0; i<arvores; i++) {
     gerarVetorDesordenadoSemRepeticoes(tam,vet);
@@ -28,7 +32,7 @@ int main() {
     aux = (clock() - t0)/ (double) CLOCKS_PER_SEC;
     tempoMedioCriacaoAVL += aux;
     printf("-> Tempo de criação da AVL: %fs\n", aux);
-    printf("-> Altura da AVL: %d\n", alturaArvore(avl));
+    printf("-> Altura da AVL: %d\n", alturaAVL(avl));
 
     gerarVetPesquisa(tamBusca,busca,tam,vet);
     // Buscas na ABP
@@ -47,14 +51,18 @@ int main() {
     printf("\n-> Tempos de busca na AVL: ");
     for (j=0; j<tamBusca; j++) {
       t0 = clock();
-      buscaABP(avl,busca[j]);
+      buscaAVL(avl,busca[j]);
       aux = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       tempoMedioBuscaAVL += aux;
       printf("%fs ", aux);
     }
     printf("\n-> Tempo médio: %fs\n\n", tempoMedioBuscaAVL);
     tempoMedioBuscaAVL = 0;
+    abp = dropABP(abp);
+    avl = dropAVL(avl);
   }
+  free(vet);
+  free(busca);
   tempoMedioCriacaoABP /= arvores;
   tempoMedioCriacaoAVL /= arvores;
   printf("-> Tempo médio de criação das ABPs: %f\n",tempoMedioCriacaoABP);
