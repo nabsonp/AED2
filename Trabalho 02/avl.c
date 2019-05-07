@@ -14,26 +14,6 @@ noAVL* buscaAVL(noAVL *r, int v) {
   } else return NULL;
 }
 
-noAVL* inserirAVL(noAVL *r, int d){
-    if (r != NULL) {
-      r->altura++;
-      if (d < r->d) r->esq = inserirAVL(r->esq,d);
-      else r->dir = inserirAVL(r->dir,d);
-    } else {
-        r = (noAVL *) malloc(sizeof(noAVL));
-        r->d = d;
-        r->esq = NULL;
-        r->dir = NULL;
-        r->altura = 1;
-    }
-    return r;
-}
-
-noAVL* inserirEmAVL(noAVL *r, int d){
-  r = inserirAVL(r, d);
-  return balanceianoAVL(r);
-}
-
 noAVL* dropAVL(noAVL *r) {
   if (r != NULL) {
     r->esq = dropAVL(r->esq);
@@ -105,11 +85,40 @@ noAVL* balanceianoAVL( noAVL *n ) {
 	return newroot;
 }
 
+noAVL* inserirEmAVL(noAVL *n, int d){
+    if (n != NULL) {
+      n->altura++;
+      if (d < n->d) n->esq = inserirEmAVL(n->esq,d);
+      else n->dir = inserirEmAVL(n->dir,d);
+
+      n->altura = 1 + (alturaAVL(n->esq) > alturaAVL(n->dir) ? alturaAVL(n->esq) : alturaAVL(n->dir));
+      noAVL *newroot = NULL;
+      int f = fb(n);
+    	if( f <= -2 ) {
+    		if( fb(n->esq) <= -1 ) newroot = rotacaoSimplesEsq(n);
+    		else newroot = rotacaoDuplaEsq(n);
+    	} else if( f >= 2 ) {
+    		if( fb(n->dir) >= 1 ) newroot = rotacaoSimplesDir(n);
+    		else {
+            newroot = rotacaoDuplaDir(n);}
+    	} else {
+    		newroot = n;
+    	}
+      return newroot;
+    } else {
+        n = (noAVL *) malloc(sizeof(noAVL));
+        n->d = d;
+        n->esq = NULL;
+        n->dir = NULL;
+        n->altura = 1;
+        return n;
+    }
+}
+
 noAVL* converterVetorAVL(noAVL* r, int tam, int vet[]) {
   r = inserirEmAVL(r,vet[0]);
   for (int i=1; i < tam; i++) {
     r = inserirEmAVL(r,vet[i]);
-    printf("%d\n", i);
   }
   return r;
 }
