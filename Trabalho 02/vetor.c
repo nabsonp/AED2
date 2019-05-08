@@ -136,19 +136,19 @@ void gerarVetorParcialmenteOrdenado(int tam, int vet[]) {
     vet[i] =  i + rand()%aux;
   }
   aux = tam*0.4;
-  for (; i <aux; i++){
+  for (; i <tam*0.2; i++){
     vet[i] = rand()%aux;
   }
   aux = tam*0.6;
-  for (; i<aux; i++) {
+  for (; i<tam*0.2; i++) {
     vet[i] =  i + rand()%aux;
   }
-  aux = tam*0.6;
-  for (; i <tam*0.8; i++){
+  aux = tam*0.8;
+  for (; i <tam*0.2; i++){
     vet[i] = rand()%aux;
   }
   for (; i<tam; i++) {
-    vet[i] =  i + rand()%aux;
+    vet[i] =  i + rand()%tam;
   }
 }
 

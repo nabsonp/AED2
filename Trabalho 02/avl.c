@@ -63,31 +63,8 @@ noAVL* rotacaoDuplaEsq( noAVL *n ) {
   return rotacaoSimplesEsq(n);
 }
 
-noAVL* balanceianoAVL( noAVL *n ) {
-  noAVL *newroot = NULL;
-  if (n) {
-  	if( n->esq ) n->esq  = balanceianoAVL(n->esq);
-  	if( n->dir ) n->dir = balanceianoAVL(n->dir);
-    n->altura = 1 + (alturaAVL(n->esq) > alturaAVL(n->dir) ? alturaAVL(n->esq) : alturaAVL(n->dir));
-    int f = fb(n);
-      //printf("%d\n", f);
-  	if( f <= -2 ) {
-  		if( fb(n->esq) <= -1 ) {newroot = rotacaoSimplesEsq(n);}
-  		else newroot = rotacaoDuplaEsq(n);
-  	} else if( f >= 2 ) {
-  		if( fb(n->dir) >= 1 ) newroot = rotacaoSimplesDir(n);
-  		else {
-          newroot = rotacaoDuplaDir(n);}
-  	} else {
-  		newroot = n;
-  	}
-  }
-	return newroot;
-}
-
 noAVL* inserirEmAVL(noAVL *n, int d){
     if (n != NULL) {
-      n->altura++;
       if (d < n->d) n->esq = inserirEmAVL(n->esq,d);
       else n->dir = inserirEmAVL(n->dir,d);
 
