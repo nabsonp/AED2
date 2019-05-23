@@ -1,5 +1,5 @@
 typedef struct noAVL {
-    int d;
+    float d;
     int indice;
     int altura;
     struct noAVL *esq;

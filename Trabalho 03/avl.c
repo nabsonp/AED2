@@ -26,7 +26,7 @@ noAVL* dropAVL(noAVL *r) {
 void caminhamentoInfixado(noAVL *r){
     if (r != NULL) {
         caminhamentoInfixado(r->esq);
-        printf("%d ",r->d);
+        printf("%f ",r->d);
         caminhamentoInfixado(r->dir);
     }
 }

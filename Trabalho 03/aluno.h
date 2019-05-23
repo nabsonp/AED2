@@ -2,14 +2,14 @@
 
 typedef struct aluno {
     int id;
-    char nome[50];
+    char nome[20];
     float cr;
+    char curso[30];
+    int idade;
 } aluno;
-
-int inserirAluno(FILE* arq, int id, char nome[50], int cr);
 
 noAVL* gerarAlunosID(FILE* arq, int t);
 
 noAVL* gerarAlunosCR(FILE* arq, int t);
 
-aluno pesqIndice(FILE *arq, int i);
+aluno pesqID(FILE *arq, noAVL *indice, int id);
