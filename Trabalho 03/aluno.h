@@ -13,3 +13,7 @@ noAVL* gerarAlunosID(FILE* arq, int t);
 noAVL* gerarAlunosCR(FILE* arq, int t);
 
 aluno pesqID(FILE *arq, noAVL *indice, int id);
+
+aluno buscaSequencial(FILE *arq, int id);
+
+void gerarAlunos(FILE* arq, int tam);
