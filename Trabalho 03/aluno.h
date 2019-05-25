@@ -22,3 +22,11 @@ void gerarAlunos(FILE* arq, int tam);
 void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]);
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id);
+
+void buscarMaiores(noAVL *no, float dado, tipoLista *lista);
+
+void buscarMenores(noAVL *no, float dado, tipoLista *lista);
+
+void buscarMaioresOuIguais(noAVL *no, float dado, tipoLista *lista);
+
+void buscarMenoresOuIguais(noAVL *no, float dado, tipoLista *lista);

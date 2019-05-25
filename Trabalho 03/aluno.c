@@ -102,3 +102,104 @@ aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
     }
     return a;
 }
+
+void buscarMaiores(noAVL *no, float dado, tipoLista *lista) {
+  if (no) {
+    if (no->d < dado)
+      buscarMaiores(no->dir,dado,lista);
+    else {
+      if (no->d > dado) {
+        buscarMaiores(no->esq,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->dir);
+      } else
+        inserirLista(no->dir);
+    }
+  }
+}
+
+void buscarMenores(noAVL *no, float dado, tipoLista *lista) {
+  if (no) {
+    if (no->d > dado)
+      buscarMenores(no->esq,dado,lista);
+    else {
+      if (no->d < dado) {
+        buscarMenores(no->dir,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->esq);
+      } else
+        inserirLista(no->esq);
+    }
+  }
+}
+
+void buscarMaioresOuIguais(noAVL *no, float dado, tipoLista *lista) {
+  if (no) {
+    if (no->d < dado)
+      buscarMaiores(no->dir,dado,lista);
+    else {
+      if (no->d > dado) {
+        buscarMaiores(no->esq,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->dir);
+      } else {
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->dir);
+      }
+    }
+  }
+}
+
+void buscarMenoresOuIguais(noAVL *no, float dado, tipoLista *lista) {
+  if (no) {
+    if (no->d > dado)
+      buscarMenores(no->esq,dado,lista);
+    else {
+      if (no->d < dado) {
+        buscarMenores(no->dir,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->esq);
+      } else {
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a);
+        inserirLista(no->esq);
+        inserirLista(no->esq);
+      }
+    }
+  }
+}
+
+void inserirLista(noAVL *no, tipoLista *lista, int indice) {
+  if (no) {
+    inserirLista(no->esq);
+    aluno a;
+    fseek(arq,0,SEEK_SET);
+    fseek(arq,indice*sizeof(aluno),SEEK_SET);
+    fread(&a,sizeof(aluno),1,arq);
+    inserirEmLista(lista, a);
+    inserirLista(no->dir);
+  }
+}
