@@ -9,12 +9,12 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    gerarAlunos(arquivo, 1000000);
+    gerarAlunos(arquivo, 100000);
     float media = 0, t;
     int pesq = 30;
     clock_t t0;
 
-    printf("Tempos das buscas: ");
+    printf("Tempos das buscas sequenciais em arquivo: ");
     for (int i=0; i<pesq; i++){
       t0= clock();
       aluno a = buscaSequencial(arquivo,2018000 + i*100);
@@ -23,7 +23,7 @@ int main() {
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
       else printf(verde "%fs " reset, t); // Achou
     }
-    printf("\nTempo médio de buscas: %fs\n", media/pesq);
+    printf("\nTempo médio de buscas (ARQUIVO): %fs\n", media/pesq);
     fclose(arquivo);
     return 0;
 }

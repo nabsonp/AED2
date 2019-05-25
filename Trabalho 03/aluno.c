@@ -4,7 +4,7 @@
 #include <time.h>
 #include "aluno.h"
 
-noAVL* gerarAlunosID(FILE* arq, int tam) {
+noAVL* gerarAlunosIdAVL(FILE* arq, int tam) {
     aluno a;
     noAVL *arv = criarAVL();
     time_t t;
@@ -21,7 +21,7 @@ noAVL* gerarAlunosID(FILE* arq, int tam) {
     return arv;
 }
 
-noAVL* gerarAlunosCR(FILE* arq, int tam) {
+noAVL* gerarAlunosCrAVL(FILE* arq, int tam) {
     aluno a;
     noAVL *arv = criarAVL();
     time_t t;
@@ -38,7 +38,7 @@ noAVL* gerarAlunosCR(FILE* arq, int tam) {
     return arv;
 }
 
-aluno pesqID(FILE *arq, noAVL *indice, int id) {
+aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
     noAVL *no = buscaAVL(indice,id);
     aluno a;
     a.id = -1;
@@ -72,4 +72,33 @@ aluno buscaSequencial(FILE *arq, int id) {
   }
   a.id = -1;
   return a;
+}
+
+void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]) {
+    aluno a;
+    tabelaHash(tamTH, th);
+    int j;
+    time_t t;
+    srand((unsigned) time(&t));
+    for(int i=0; i<tam; i++) {
+        a.id = 2019000 + i;
+        a.cr = (rand() % 10);
+        a.idade = 18 + (rand() % 10);
+        strcpy(a.curso,"Ciência da Computação");
+        strcpy(a.nome,"Aluno");
+        fwrite(&a,sizeof(aluno),1,arq);
+        inserirHash(a.id, i, tamTH, th);
+    }
+}
+
+aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
+    int indice = buscaHash(id,tamTH, th);
+    aluno a;
+    a.id = -1;
+    if (indice != -1) {
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+    }
+    return a;
 }

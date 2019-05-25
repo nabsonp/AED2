@@ -1,4 +1,5 @@
 #include "avl.h"
+#include "hash.h"
 
 typedef struct aluno {
     int id;
@@ -8,12 +9,16 @@ typedef struct aluno {
     int idade;
 } aluno;
 
-noAVL* gerarAlunosID(FILE* arq, int t);
+noAVL* gerarAlunosIdAVL(FILE* arq, int t);
 
-noAVL* gerarAlunosCR(FILE* arq, int t);
+noAVL* gerarAlunosCrAVL(FILE* arq, int t);
 
-aluno pesqID(FILE *arq, noAVL *indice, int id);
+aluno buscaIdAVL(FILE *arq, noAVL *indice, int id);
 
 aluno buscaSequencial(FILE *arq, int id);
 
 void gerarAlunos(FILE* arq, int tam);
+
+void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]);
+
+aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id);
