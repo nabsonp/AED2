@@ -17,7 +17,7 @@ int main() {
     printf("Tempos das buscas sequenciais em arquivo: ");
     for (int i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaSequencial(arquivo,2018000 + i*100);
+      aluno a = buscaSequencial(arquivo,i*8);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou

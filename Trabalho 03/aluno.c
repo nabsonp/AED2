@@ -55,7 +55,7 @@ void gerarAlunos(FILE* arq, int tam) {
     time_t t;
     srand((unsigned) time(&t));
     for(int i=0; i<tam; i++) {
-        a.id = rand();
+        a.id = 105 + i;
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);
         strcpy(a.curso,"Ciência da Computação");
@@ -77,11 +77,10 @@ aluno buscaSequencial(FILE *arq, int id) {
 void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
     tabelaHash(tamTH, th);
-    int j;
     time_t t;
     srand((unsigned) time(&t));
     for(int i=0; i<tam; i++) {
-        a.id = 2019000 + i;
+        a.id = (rand() % tamTH);
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);
         strcpy(a.curso,"Ciência da Computação");

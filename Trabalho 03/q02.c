@@ -9,8 +9,8 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    int pesq = 30, tamTH = 110000, nReg = 100000;
-    hash indice[tamTH];
+    int pesq = 30, tamTH = 11000, nReg = 10000;
+    hash *indice = (hash*) malloc(sizeof(hash)*tamTH);
     gerarAlunosIdHash(arquivo, nReg, tamTH, indice);
     float media = 0, t;
     clock_t t0;
@@ -18,7 +18,7 @@ int main() {
     printf("Tempos das buscas com indexação por Hash: ");
     for (int i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaIdHash(arquivo,tamTH,indice,2018000 + i*100);
+      aluno a = buscaIdHash(arquivo,tamTH,indice,105 + i*100);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou

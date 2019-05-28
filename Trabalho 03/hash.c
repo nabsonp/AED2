@@ -1,7 +1,7 @@
 #include "hash.h"
 
 int h(int id) {
-  return id % 100003; // Primo para 100K registros
+  return id % 10003; // Primo para 100K registros
 }
 
 int buscaHash(int id, int tam, hash ht[]) {
@@ -34,7 +34,7 @@ int inserirHash(int id, int indice, int tam, hash th[]) {
     return 1;
   } else {
     // Deu colisão, então manda para a área de overflow
-    for (i=100001; i<tam; i++) {
+    for (i=10001; i<tam; i++) {
       if (th[i].id == -1)
         th[i] = hs;
         return 1;
