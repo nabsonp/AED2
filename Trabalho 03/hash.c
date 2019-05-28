@@ -16,6 +16,8 @@ int buscaHash(int id, int tam, hash ht[]) {
       for (i=100001; i<tam; i++) {
         if (id == ht[i].id)
           return ht[i].indice;
+        else if (ht[i].id == -1)
+          break;
       }
     }
   }

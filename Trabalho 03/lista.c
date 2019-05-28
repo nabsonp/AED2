@@ -35,3 +35,14 @@ void dropLista(tipoLista *l) {
   }
   l->prim = NULL;
 }
+
+void mostrarLista(tipoLista lista) {
+  while (lista.prim) {
+    print("ID: %d", lista.prim->id);
+    print("Nome: %s", &(lista.prim->nome));
+    print("CR: %f", lista.prim->cr);
+    print("Curso: %s", &(lista.prim->curso));
+    print("Idade: %d", lista.prim->idade);
+    lista.prim = lista.prim->prox;
+  }
+}

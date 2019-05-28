@@ -1,5 +1,3 @@
-#include "lista.h"
-
 typedef struct noAVL {
     float d;
     int indice;
