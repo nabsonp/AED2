@@ -74,20 +74,23 @@ aluno buscaSequencial(FILE *arq, int id) {
   return a;
 }
 
-void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]) {
+int gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
     tabelaHash(tamTH, th);
     time_t t;
+    int colisoes = 0;
     srand((unsigned) time(&t));
     for(int i=0; i<tam; i++) {
-        a.id = (rand() % tamTH);
+        a.id =  (rand() % 10000);
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);
         strcpy(a.curso,"Ciência da Computação");
         strcpy(a.nome,"Aluno");
         fwrite(&a,sizeof(aluno),1,arq);
-        inserirHash(a.id, i, tamTH, th);
+        if (inserirHash(a.id, i, tamTH, th) == -1)
+            colisoes++;
     }
+    return colisoes;
 }
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
@@ -151,7 +154,7 @@ void buscarMenores(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
     if (no->d > dado)
       buscarMenores(arq,no->esq,dado,lista);
     else {
-      if (no->d < dado) {
+      if (no->d <= dado) {
         buscarMenores(arq,no->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
@@ -170,7 +173,7 @@ void buscarMaioresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
     if (no->d < dado)
       buscarMaiores(arq,no->dir,dado,lista);
     else {
-      if (no->d > dado) {
+      if (no->d >= dado) {
         buscarMaiores(arq,no->esq,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
@@ -178,14 +181,7 @@ void buscarMaioresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a);
         inserirLista(arq,no->dir, lista);
-      } else {
-        aluno a;
-        fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
-        fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a);
-        inserirLista(arq,no, lista);
-      }
+        }
     }
   }
 }
@@ -195,7 +191,7 @@ void buscarMenoresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
     if (no->d > dado)
       buscarMenores(arq,no->esq,dado,lista);
     else {
-      if (no->d < dado) {
+      if (no->d <= dado) {
         buscarMenores(arq,no->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
@@ -203,13 +199,6 @@ void buscarMenoresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a);
         inserirLista(arq, no->esq, lista);
-      } else {
-        aluno a;
-        fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
-        fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a);
-        inserirLista(arq, no, lista);
       }
     }
   }

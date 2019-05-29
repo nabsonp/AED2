@@ -41,7 +41,7 @@ aluno buscaSequencial(FILE *arq, int id);
 
 void gerarAlunos(FILE* arq, int tam);
 
-void gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]);
+int gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]);
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id);
 

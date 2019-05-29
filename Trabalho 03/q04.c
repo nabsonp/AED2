@@ -14,7 +14,7 @@ int main() {
     criar(lista);
 
     caminhamentoInfixado(indice);
-    buscarMaioresOuIguais(arquivo,indice,8,lista);
+    buscarMaioresOuIguais(arquivo,indice,7,lista);
     mostrarLista(*lista);
 
     printf("\n");

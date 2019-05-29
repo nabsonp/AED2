@@ -11,10 +11,11 @@ int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
     int pesq = 30, tamTH = 11000, nReg = 10000;
     hash *indice = (hash*) malloc(sizeof(hash)*tamTH);
-    gerarAlunosIdHash(arquivo, nReg, tamTH, indice);
+    int colisoes = gerarAlunosIdHash(arquivo, nReg, tamTH, indice);
     float media = 0, t;
     clock_t t0;
 
+    printf("%d Colisões na inserção.\n",colisoes);
     printf("Tempos das buscas com indexação por Hash: ");
     for (int i=0; i<pesq; i++){
       t0= clock();
