@@ -4,36 +4,7 @@
 #include <time.h>
 #include "aluno.h"
 
-noAVL* indexarIdAVL(FILE* arq, int tam) {
-    aluno a;
-    noAVL *arv = criarAVL();
-    fseek(arq,0,SEEK_SET);
-    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
-        arv = inserirEmAVL(arv, a.id, i);
-    return arv;
-}
-
-noAVL* indexarCrAVL(FILE* arq, int tam) {
-  aluno a;
-  noAVL *arv = criarAVL();
-  fseek(arq,0,SEEK_SET);
-  for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
-      arv = inserirEmAVL(arv, a.cr, i);
-  return arv;
-}
-
-aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
-    noAVL *no = buscaAVL(indice,id);
-    aluno a;
-    a.id = -1;
-    if (no) {
-      fseek(arq,0,SEEK_SET);
-      fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
-      fread(&a,sizeof(aluno),1,arq);
-    }
-    return a;
-}
-
+// ARQUIVO
 void gerarAlunos(FILE* arq, int tam) {
     aluno a;
     time_t t;
@@ -72,6 +43,43 @@ aluno buscaSequencial(FILE *arq, int id) {
   return a;
 }
 
+void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr > dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr < dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr >= dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr <= dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+// INDEXAÇÃO POR HASH
 int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
     tabelaHash(tamTH, th);
@@ -91,6 +99,37 @@ aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
     if (indice != -1) {
       fseek(arq,0,SEEK_SET);
       fseek(arq,indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+    }
+    return a;
+}
+
+// INDEXAÇÃO POR AVL
+noAVL* indexarIdAVL(FILE* arq, int tam) {
+    aluno a;
+    noAVL *arv = criarAVL();
+    fseek(arq,0,SEEK_SET);
+    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+        arv = inserirEmAVL(arv, a.id, i);
+    return arv;
+}
+
+noAVL* indexarCrAVL(FILE* arq, int tam) {
+  aluno a;
+  noAVL *arv = criarAVL();
+  fseek(arq,0,SEEK_SET);
+  for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+      arv = inserirEmAVL(arv, a.cr, i);
+  return arv;
+}
+
+aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
+    noAVL *no = buscaAVL(indice,id);
+    aluno a;
+    a.id = -1;
+    if (no) {
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
     }
     return a;
@@ -190,42 +229,6 @@ void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista
         inserirLista(arq, no->esq, lista);
       }
     }
-  }
-}
-
-void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) {
-  fseek(arq,0,SEEK_SET);
-  aluno a;
-  while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr > dado)
-      inserirEmLista(lista, a);
-  }
-}
-
-void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista) {
-  fseek(arq,0,SEEK_SET);
-  aluno a;
-  while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr < dado)
-      inserirEmLista(lista, a);
-  }
-}
-
-void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
-  fseek(arq,0,SEEK_SET);
-  aluno a;
-  while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr >= dado)
-      inserirEmLista(lista, a);
-  }
-}
-
-void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
-  fseek(arq,0,SEEK_SET);
-  aluno a;
-  while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr <= dado)
-      inserirEmLista(lista, a);
   }
 }
 
