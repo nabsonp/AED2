@@ -64,6 +64,18 @@ void gerarAlunos(FILE* arq, int tam) {
     }
 }
 
+void mostrarArquivo(FILE* arq) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    printf("\nID: %d", a.id);
+    printf("\nNome: %s", (a.nome));
+    printf("\nCR: %f", a.cr);
+    printf("\nCurso: %s", (a.curso));
+    printf("\nIdade: %d\n", a.idade);
+  }
+}
+
 aluno buscaSequencial(FILE *arq, int id) {
   aluno a;
   fseek(arq,0,SEEK_SET);
@@ -130,13 +142,13 @@ void inserirLista(FILE *arq,noAVL *no, tipoLista *lista) {
   }
 }
 
-void buscarMaiores(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
+void buscarMaioresAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   if (no) {
     if (no->d < dado)
-      buscarMaiores(arq,no->dir,dado,lista);
+      buscarMaioresAVL(arq,no->dir,dado,lista);
     else {
       if (no->d > dado) {
-        buscarMaiores(arq,no->esq,dado,lista);
+        buscarMaioresAVL(arq,no->esq,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
         fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
@@ -149,13 +161,13 @@ void buscarMaiores(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   }
 }
 
-void buscarMenores(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
+void buscarMenoresAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   if (no) {
     if (no->d > dado)
-      buscarMenores(arq,no->esq,dado,lista);
+      buscarMenoresAVL(arq,no->esq,dado,lista);
     else {
       if (no->d <= dado) {
-        buscarMenores(arq,no->dir,dado,lista);
+        buscarMenoresAVL(arq,no->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
         fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
@@ -168,13 +180,13 @@ void buscarMenores(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   }
 }
 
-void buscarMaioresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
+void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   if (no) {
     if (no->d < dado)
-      buscarMaiores(arq,no->dir,dado,lista);
+      buscarMaioresAVL(arq,no->dir,dado,lista);
     else {
       if (no->d >= dado) {
-        buscarMaiores(arq,no->esq,dado,lista);
+        buscarMaioresAVL(arq,no->esq,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
         fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
@@ -186,13 +198,13 @@ void buscarMaioresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   }
 }
 
-void buscarMenoresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
+void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   if (no) {
     if (no->d > dado)
-      buscarMenores(arq,no->esq,dado,lista);
+      buscarMenoresAVL(arq,no->esq,dado,lista);
     else {
       if (no->d <= dado) {
-        buscarMenores(arq,no->dir,dado,lista);
+        buscarMenoresAVL(arq,no->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
         fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
@@ -204,7 +216,41 @@ void buscarMenoresOuIguais(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
   }
 }
 
-// lista
+void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr > dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr < dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr >= dado)
+      inserirEmLista(lista, a);
+  }
+}
+
+void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+  fseek(arq,0,SEEK_SET);
+  aluno a;
+  while (fread(&a,sizeof(aluno),1,arq)) {
+    if (a.cr <= dado)
+      inserirEmLista(lista, a);
+  }
+}
 
 void criar(tipoLista *l){
   l->prim = NULL;
@@ -215,16 +261,6 @@ tipoNo* buscaSequencialLista(tipoLista l, float valor) {
     l.prim = l.prim->prox;
   }
   return l.prim;
-}
-
-void dropLista(tipoLista *l) {
-  tipoNo *aux;
-  while (l->prim != NULL) {
-    aux = l->prim;
-    l->prim = aux->prox;
-    free(aux);
-  }
-  l->prim = NULL;
 }
 
 void mostrarLista(tipoLista lista) {
