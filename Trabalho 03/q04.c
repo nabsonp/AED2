@@ -13,7 +13,8 @@ int main() {
     tipoLista *lista = (tipoLista*) malloc(sizeof(tipoLista));
     criar(lista);
 
-    caminhamentoInfixado(indice);
+    caminhamentoPrefixado(indice);
+    printf("altura %d\n", alturaAVL(indice));
     buscarMaioresOuIguaisAVL(arquivo,indice,7,lista);
     mostrarLista(*lista);
 

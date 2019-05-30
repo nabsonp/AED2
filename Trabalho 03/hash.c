@@ -1,4 +1,5 @@
 #include "hash.h"
+#include<stdio.h>
 
 int primo = 10007;
 
@@ -15,11 +16,9 @@ int buscaHash(int id, int tam, hash ht[]) {
       return ht[i].indice; // Retorna o índice do registro no arquivo
     else {
       // Busca sequencial na área de overflow
-      for (i=100001; i<tam; i++) {
+      for (i=primo; ht[i].id != -1 && i<tam; i++) {
         if (id == ht[i].id)
           return ht[i].indice;
-        else if (ht[i].id == -1)
-          break;
       }
     }
   }

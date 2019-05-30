@@ -10,6 +10,8 @@ noAVL* criarAVL();
 
 void caminhamentoInfixado(noAVL *r);
 
+void caminhamentoPrefixado(noAVL *r);
+
 noAVL* inserirEmAVL(noAVL *r, int d, int ind);
 
 int fb(noAVL *n);

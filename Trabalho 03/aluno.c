@@ -4,38 +4,20 @@
 #include <time.h>
 #include "aluno.h"
 
-noAVL* gerarAlunosIdAVL(FILE* arq, int tam) {
+noAVL* indexarIdAVL(FILE* arq, int tam) {
     aluno a;
     noAVL *arv = criarAVL();
-    time_t t;
-    srand((unsigned) time(&t));
-    for(int i=0; i<tam; i++) {
-        a.id = 105 + i;
-        a.cr = (rand() % 10);
-        a.idade = 18 + (rand() % 10);
-        strcpy(a.curso,"Ciência da Computação");
-        strcpy(a.nome,"Aluno");
-        fwrite(&a,sizeof(aluno),1,arq);
+    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
         arv = inserirEmAVL(arv, a.id, i);
-    }
     return arv;
 }
 
-noAVL* gerarAlunosCrAVL(FILE* arq, int tam) {
-    aluno a;
-    noAVL *arv = criarAVL();
-    time_t t;
-    srand((unsigned) time(&t));
-    for(int i=0; i<tam; i++) {
-        a.id = 105 + i;
-        a.cr = (rand() % 10);
-        a.idade = 18 + (rand() % 10);
-        strcpy(a.curso,"Ciência da Computação");
-        strcpy(a.nome,"NOME");
-        fwrite(&a,sizeof(aluno),1,arq);
-        arv = inserirEmAVL(arv, a.cr, i);
-    }
-    return arv;
+noAVL* indexarCrAVL(FILE* arq, int tam) {
+  aluno a;
+  noAVL *arv = criarAVL();
+  for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+      arv = inserirEmAVL(arv, a.cr, i);
+  return arv;
 }
 
 aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
@@ -54,8 +36,10 @@ void gerarAlunos(FILE* arq, int tam) {
     aluno a;
     time_t t;
     srand((unsigned) time(&t));
+    int ids[tam];
+    gerarVetorDesordenadoSemRepeticoes(tam, ids);
     for(int i=0; i<tam; i++) {
-        a.id = 105 + i;
+        a.id = ids[i];
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);
         strcpy(a.curso,"Ciência da Computação");
@@ -86,19 +70,11 @@ aluno buscaSequencial(FILE *arq, int id) {
   return a;
 }
 
-int gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]) {
+int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
     tabelaHash(tamTH, th);
-    time_t t;
     int colisoes = 0;
-    srand((unsigned) time(&t));
-    for(int i=0; i<tam; i++) {
-        a.id =  (rand() % 10000);
-        a.cr = (rand() % 10);
-        a.idade = 18 + (rand() % 10);
-        strcpy(a.curso,"Ciência da Computação");
-        strcpy(a.nome,"Aluno");
-        fwrite(&a,sizeof(aluno),1,arq);
+    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++) {
         if (inserirHash(a.id, i, tamTH, th) == -1)
             colisoes++;
     }
@@ -185,15 +161,13 @@ void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista
     if (no->d < dado)
       buscarMaioresAVL(arq,no->dir,dado,lista);
     else {
-      if (no->d >= dado) {
-        buscarMaioresAVL(arq,no->esq,dado,lista);
-        aluno a;
-        fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
-        fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a);
-        inserirLista(arq,no->dir, lista);
-        }
+      aluno a;
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+      inserirEmLista(lista, a);
+      buscarMaioresAVL(arq,no->esq,dado,lista);
+      inserirLista(arq,no->dir, lista);
     }
   }
 }

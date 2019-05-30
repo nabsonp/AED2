@@ -1,5 +1,6 @@
 #include "avl.h"
 #include "hash.h"
+#include "vetor.h"
 
 typedef struct aluno {
     int id;
@@ -29,9 +30,9 @@ tipoNo* buscaSequencialLista(tipoLista l, float valor);
 
 void mostrarLista(tipoLista lista);
 
-noAVL* gerarAlunosIdAVL(FILE* arq, int t);
+noAVL* indexarIdAVL(FILE* arq, int t);
 
-noAVL* gerarAlunosCrAVL(FILE* arq, int t);
+noAVL* indexarCrAVL(FILE* arq, int t);
 
 aluno buscaIdAVL(FILE *arq, noAVL *indice, int id);
 
@@ -41,7 +42,7 @@ void gerarAlunos(FILE* arq, int tam);
 
 void mostrarArquivo(FILE* arq);
 
-int gerarAlunosIdHash(FILE* arq, int tam, int tamTH, hash th[]);
+int indexarHash(FILE* arq, int tam, int tamTH, hash th[]);
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id);
 
