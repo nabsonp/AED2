@@ -9,13 +9,13 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    noAVL *indice = gerarAlunosCrAVL(arquivo, 10);
+    gerarAlunos(arquivo, 10);
+    no *indice = indexarCrABP(arquivo, 10);
     tipoLista *lista = (tipoLista*) malloc(sizeof(tipoLista));
     criar(lista);
 
-    caminhamentoPrefixado(indice);
-    printf("altura %d\n", alturaAVL(indice));
-    buscarMaioresOuIguaisAVL(arquivo,indice,7,lista);
+    caminhamentoPrefixadoABP(indice);
+    buscarMaioresOuIguaisABP(arquivo,indice,7,lista);
     mostrarLista(*lista);
 
     printf("\n");

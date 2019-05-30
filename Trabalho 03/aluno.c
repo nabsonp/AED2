@@ -135,6 +135,28 @@ aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
     return a;
 }
 
+// INDEXAÇÃO COM ABP
+no* indexarCrABP(FILE* arq, int tam) {
+  aluno a;
+  no *arv = criarArvore();
+  fseek(arq,0,SEEK_SET);
+  for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+      arv = inserirEmABP(arv, a.cr, i);
+  return arv;
+}
+
+aluno buscaIdABP(FILE *arq, no *indice, int id) {
+    no *n = buscaABP(indice,id);
+    aluno a;
+    a.id = -1;
+    if (n) {
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+    }
+    return a;
+}
+
 int inserirEmLista(tipoLista *l, aluno a) {
   tipoNo *aux = (tipoNo *) malloc(sizeof(tipoNo)*8);
   if (aux) {
@@ -148,85 +170,92 @@ int inserirEmLista(tipoLista *l, aluno a) {
   }
 }
 
-void inserirLista(FILE *arq,noAVL *no, tipoLista *lista) {
-  if (no) {
-    inserirLista(arq, no->esq, lista);
+void inserirLista(FILE *arq,no *n, tipoLista *lista) {
+  if (n) {
+    inserirLista(arq, n->esq, lista);
     aluno a;
     fseek(arq,0,SEEK_SET);
-    fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+    fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
     fread(&a,sizeof(aluno),1,arq);
     inserirEmLista(lista, a);
-    inserirLista(arq, no->dir, lista);
+    inserirLista(arq, n->dir, lista);
   }
 }
 
-void buscarMaioresAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
-  if (no) {
-    if (no->d < dado)
-      buscarMaioresAVL(arq,no->dir,dado,lista);
+void buscarMaioresABP(FILE *arq, no *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d < dado)
+      buscarMaioresABP(arq,n->dir,dado,lista);
     else {
-      if (no->d > dado) {
-        buscarMaioresAVL(arq,no->esq,dado,lista);
+      if (n->d > dado) {
+        buscarMaioresABP(arq,n->esq,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a);
-        inserirLista(arq, no->dir,lista);
+        inserirLista(arq, n->dir,lista);
       } else
-        inserirLista(arq,no->dir, lista);
+        inserirLista(arq,n->dir, lista);
     }
   }
 }
 
-void buscarMenoresAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
-  if (no) {
-    if (no->d > dado)
-      buscarMenoresAVL(arq,no->esq,dado,lista);
+void buscarMenoresABP(FILE *arq, no *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d > dado)
+      buscarMenoresABP(arq,n->esq,dado,lista);
     else {
-      if (no->d <= dado) {
-        buscarMenoresAVL(arq,no->dir,dado,lista);
+      if (n->d <= dado) {
+        buscarMenoresABP(arq,n->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a);
-        inserirLista(arq, no->esq, lista);
+        inserirLista(arq, n->esq, lista);
       } else
-        inserirLista(arq, no->esq, lista);
+        inserirLista(arq, n->esq, lista);
     }
   }
 }
 
-void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
-  if (no) {
-    if (no->d < dado)
-      buscarMaioresAVL(arq,no->dir,dado,lista);
+void buscarMaioresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d < dado)
+      buscarMaioresABP(arq,n->dir,dado,lista);
     else {
       aluno a;
       fseek(arq,0,SEEK_SET);
-      fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
       inserirEmLista(lista, a);
-      buscarMaioresAVL(arq,no->esq,dado,lista);
-      inserirLista(arq,no->dir, lista);
+      no *aux = n->esq;
+      while(aux && aux->d == dado) {
+          fseek(arq,0,SEEK_SET);
+          fseek(arq,aux->indice*sizeof(aluno),SEEK_SET);
+          fread(&a,sizeof(aluno),1,arq);
+          inserirEmLista(lista, a);
+          aux = aux->esq;
+      }
+      inserirLista(arq,n->dir, lista);
     }
   }
 }
 
-void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *no, float dado, tipoLista *lista) {
-  if (no) {
-    if (no->d > dado)
-      buscarMenoresAVL(arq,no->esq,dado,lista);
+void buscarMenoresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d > dado)
+      buscarMenoresABP(arq,n->esq,dado,lista);
     else {
-      if (no->d <= dado) {
-        buscarMenoresAVL(arq,no->dir,dado,lista);
+      if (n->d <= dado) {
+        buscarMenoresABP(arq,n->dir,dado,lista);
         aluno a;
         fseek(arq,0,SEEK_SET);
-        fseek(arq,no->indice*sizeof(aluno),SEEK_SET);
+        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a);
-        inserirLista(arq, no->esq, lista);
+        inserirLista(arq, n->esq, lista);
       }
     }
   }
