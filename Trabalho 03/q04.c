@@ -15,7 +15,7 @@ int main() {
     criar(lista);
 
     caminhamentoPrefixadoABP(indice);
-    buscarMaioresOuIguaisABP(arquivo,indice,7,lista);
+    buscarMenoresOuIguaisABP(arquivo,indice,5,lista);
     mostrarLista(*lista);
 
     printf("\n");
