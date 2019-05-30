@@ -27,8 +27,8 @@ int main() {
       a = buscaIdHash(arquivo,tamTH,indiceHash,500 + i*100);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
-      if (a.id == -1) printf(vermelho "%d %fs " reset, a.id, t); // Não achou
-      else printf(verde "%d %fs " reset, a.id, t); // Achou
+      if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
+      else printf(verde "%fs " reset, t); // Achou
     }
     printf("\nTempo médio de buscas: %fs\n", media/pesq);
     media = 0;
@@ -41,8 +41,8 @@ int main() {
       aluno a = buscaIdAVL(arquivo,indiceAVL,500 + i*100);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
-      if (a.id == -1) printf(vermelho "%d %fs " reset, a.id, t); // Não achou
-      else printf(verde "%d %fs " reset, a.id, t); // Achou
+      if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
+      else printf(verde "%fs " reset, t); // Achou
     }
     printf("\nTempo médio de buscas: %fs\n", media/pesq);
     media = 0;
@@ -56,7 +56,7 @@ int main() {
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
-      else printf(verde "%d %fs " reset, a.id, t); // Achou
+      else printf(verde "%fs " reset, t); // Achou
     }
     printf("\nTempo médio de buscas: %fs\n", media/pesq);
 

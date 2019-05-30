@@ -7,6 +7,7 @@
 noAVL* indexarIdAVL(FILE* arq, int tam) {
     aluno a;
     noAVL *arv = criarAVL();
+    fseek(arq,0,SEEK_SET);
     for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
         arv = inserirEmAVL(arv, a.id, i);
     return arv;
@@ -15,6 +16,7 @@ noAVL* indexarIdAVL(FILE* arq, int tam) {
 noAVL* indexarCrAVL(FILE* arq, int tam) {
   aluno a;
   noAVL *arv = criarAVL();
+  fseek(arq,0,SEEK_SET);
   for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
       arv = inserirEmAVL(arv, a.cr, i);
   return arv;
@@ -74,6 +76,7 @@ int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
     tabelaHash(tamTH, th);
     int colisoes = 0;
+    fseek(arq,0,SEEK_SET);
     for (int i=0; fread(&a,sizeof(aluno),1,arq); i++) {
         if (inserirHash(a.id, i, tamTH, th) == -1)
             colisoes++;
