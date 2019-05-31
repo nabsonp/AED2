@@ -8,9 +8,9 @@
 #define reset   "\x1b[0m"
 
 int main() {
-    int tam = 10;
+    int tam = 10000, buscas[30];
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    gerarAlunos(arquivo, tam);
+    gerarAlunos(arquivo, tam, buscas);
     noAVL *indice = indexarCrAVL(arquivo, tam);
     tipoLista *lista = (tipoLista*) malloc(sizeof(tipoLista));
     criar(lista);

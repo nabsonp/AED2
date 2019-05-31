@@ -5,13 +5,19 @@
 #include "aluno.h"
 
 // ARQUIVO
-void gerarAlunos(FILE* arq, int tam) {
+void gerarAlunos(FILE* arq, int tam, int buscas[]) {
     aluno a;
     time_t t;
     srand((unsigned) time(&t));
-    int ids[tam];
+    int ids[tam],i;
     gerarVetorDesordenadoSemRepeticoes(tam, ids);
-    for(int i=0; i<tam; i++) {
+    for (i=0; i<10; i++) {
+      buscas[i] = -1;
+    }
+    for (i=10; i < 30; i++) {
+      buscas[i] = ids[i*330];
+    }
+    for(i=0; i<tam; i++) {
         a.id = ids[i];
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);

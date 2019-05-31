@@ -9,8 +9,8 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    int pesq = 30, tam = 10000, i, tamTH = tam + (tam/10);
-    gerarAlunos(arquivo, tam);
+    int pesq = 30, buscas[pesq], tam = 10000, i, tamTH = tam + (tam/10);
+    gerarAlunos(arquivo, tam, buscas);
     float media = 0, t;
     hash *indiceHash = (hash*) malloc(sizeof(hash)*tamTH);
     int colisoes = indexarHash(arquivo, tam, tamTH, indiceHash);
@@ -20,11 +20,11 @@ int main() {
 
     // HASH
     printf("\t\t******** ÍNDICE COM HASH ********\n");
-    printf("%d Colisões.\n",colisoes);
+    printf("Colisões: %d.\n",colisoes);
     printf("Tempos das buscas: ");
     for (i=0; i<pesq; i++){
       t0= clock();
-      a = buscaIdHash(arquivo,tamTH,indiceHash,500 + i*100);
+      a = buscaIdHash(arquivo,tamTH,indiceHash, buscas[i]);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
@@ -35,10 +35,11 @@ int main() {
 
     // AVL
     printf("\n\t\t******** ÍNDICE COM AVL ********\n");
+    printf("Altura: %d.\n", alturaAVL(indiceAVL));
     printf("Tempos das buscas: ");
     for (i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaIdAVL(arquivo,indiceAVL,500 + i*100);
+      aluno a = buscaIdAVL(arquivo,indiceAVL, buscas[i]);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
@@ -49,10 +50,11 @@ int main() {
 
     // ARQUIVO
     printf("\n\t\t******** SEM ÍNDICE ********\n");
+    printf("Registros: %d.\n", tam);
     printf("Tempos das buscas: ");
     for (i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaSequencial(arquivo,500 + i*100);
+      aluno a = buscaSequencial(arquivo, buscas[i]);
       t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
       media += t;
       if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
