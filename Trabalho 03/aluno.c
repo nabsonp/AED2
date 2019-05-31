@@ -262,6 +262,16 @@ tipoNo* buscaSequencialLista(tipoLista l, float valor) {
   return l.prim;
 }
 
+void dropLista(tipoLista *l) {
+  tipoNo *aux;
+  while (l->prim != NULL) {
+    aux = l->prim;
+    l->prim = aux->prox;
+    free(aux);
+  }
+  l->prim = NULL;
+}
+
 void mostrarLista(tipoLista lista) {
   while (lista.prim) {
     printf("\nID: %d", lista.prim->a.id);

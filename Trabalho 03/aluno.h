@@ -66,3 +66,5 @@ void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
 no* indexarCrABP(FILE* arq, int tam);
 
 aluno buscaIdABP(FILE *arq, no *indice, int id);
+
+void dropLista(tipoLista *l);
