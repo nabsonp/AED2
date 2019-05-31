@@ -1,7 +1,6 @@
 #include "avl.h"
 #include "hash.h"
 #include "vetor.h"
-#include "abp.h"
 #include "lista.h"
 
 typedef struct aluno {
@@ -31,13 +30,13 @@ int indexarHash(FILE* arq, int tam, int tamTH, hash th[]);
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id);
 
-void buscarMaioresABP(FILE *arq, no *n, float dado, tipoLista *lista);
+void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista);
 
-void buscarMenoresABP(FILE *arq, no *n, float dado, tipoLista *lista);
+void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista);
 
-void buscarMaioresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista);
+void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista);
 
-void buscarMenoresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista);
+void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista);
 
 void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) ;
 
@@ -47,6 +46,6 @@ void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
 
 void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
 
-no* indexarCrABP(FILE* arq, int tam);
+noAVL* indexarCrAVL(FILE* arq, int tam);
 
-aluno buscaIdABP(FILE *arq, no *indice, int id);
+aluno buscaIdAVL(FILE *arq, noAVL *indice, int id);

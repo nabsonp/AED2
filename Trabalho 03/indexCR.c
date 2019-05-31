@@ -8,42 +8,42 @@
 #define reset   "\x1b[0m"
 
 int main() {
-    int tam = 10000;
+    int tam = 10;
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
     gerarAlunos(arquivo, tam);
-    no *indice = indexarCrABP(arquivo, tam);
+    noAVL *indice = indexarCrAVL(arquivo, tam);
     tipoLista *lista = (tipoLista*) malloc(sizeof(tipoLista));
     criar(lista);
-    float valor, temposABP[4], temposArq[4];
+    float valor, temposAVL[4], temposArq[4];
     clock_t t0;
 
     printf("Insira um valor para buscar: ");
     scanf("%f", &valor);
-    // caminhamentoPrefixadoABP(indice);
+    // caminhamentoPrefixado(indice);
 
-    // printf(verde "\n******* Busca por intervalos em ABP *******\n" reset);
+    // printf(verde "\n******* Busca por intervalos em AVL *******\n" reset);
     // printf(verde "Menores que %.2f:" reset, valor);
     t0= clock();
-    buscarMenoresABP(arquivo,indice,valor,lista);
-    temposABP[0] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
+    buscarMenoresAVL(arquivo,indice,valor,lista);
+    temposAVL[0] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
     // mostrarLista(*lista);
     dropLista(lista);
     // printf(verde "Menores ou iguais a %.2f:" reset, valor);
     t0= clock();
-    buscarMenoresOuIguaisABP(arquivo,indice,valor,lista);
-    temposABP[1] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
+    buscarMenoresOuIguaisAVL(arquivo,indice,valor,lista);
+    temposAVL[1] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
     // mostrarLista(*lista);
     dropLista(lista);
     // printf(verde "Maiores que %.2f:" reset, valor);
     t0= clock();
-    buscarMaioresABP(arquivo,indice,valor,lista);
-    temposABP[2] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
+    buscarMaioresAVL(arquivo,indice,valor,lista);
+    temposAVL[2] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
     // mostrarLista(*lista);
     dropLista(lista);
     // printf(verde "Maiores ou iguais a %.2f:" reset, valor);
     t0= clock();
-    buscarMaioresOuIguaisABP(arquivo,indice,valor,lista);
-    temposABP[3] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
+    buscarMaioresOuIguaisAVL(arquivo,indice,valor,lista);
+    temposAVL[3] = (clock() - t0)/ (double) CLOCKS_PER_SEC;
     // mostrarLista(*lista);
     dropLista(lista);
 
@@ -74,16 +74,16 @@ int main() {
     dropLista(lista);
 
     printf("\n\tTempo médio de buscas por menores em:\n");
-    printf(verde "\t\tABP: %fs\n" reset, temposABP[0]);
+    printf(verde "\t\tAVL: %fs\n" reset, temposAVL[0]);
     printf(vermelho "\t\tArq: %fs\n" reset, temposArq[0]);
     printf("\tTempo médio de buscas por menores ou iguais em:\n");
-    printf(verde "\t\tABP: %fs\n" reset, temposABP[1]);
+    printf(verde "\t\tAVL: %fs\n" reset, temposAVL[1]);
     printf(vermelho "\t\tArq: %fs\n" reset, temposArq[1]);
     printf("\tTempo médio de buscas por maiores em:\n");
-    printf(verde "\t\tABP: %fs\n" reset, temposABP[2]);
+    printf(verde "\t\tAVL: %fs\n" reset, temposAVL[2]);
     printf(vermelho "\t\tArq: %fs\n" reset, temposArq[2]);
     printf("\tTempo médio de buscas por maiores ou iguais em:\n");
-    printf(verde "\t\tABP: %fs\n" reset, temposABP[3]);
+    printf(verde "\t\tAVL: %fs\n" reset, temposAVL[3]);
     printf(vermelho "\t\tArq: %fs\n" reset, temposArq[3]);
 
     printf("\n");
