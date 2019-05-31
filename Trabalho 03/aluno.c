@@ -48,7 +48,7 @@ void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) {
   aluno a;
   while (fread(&a,sizeof(aluno),1,arq)) {
     if (a.cr > dado)
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
   }
 }
 
@@ -57,7 +57,7 @@ void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista) {
   aluno a;
   while (fread(&a,sizeof(aluno),1,arq)) {
     if (a.cr < dado)
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
   }
 }
 
@@ -66,7 +66,7 @@ void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
   aluno a;
   while (fread(&a,sizeof(aluno),1,arq)) {
     if (a.cr >= dado)
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
   }
 }
 
@@ -75,7 +75,7 @@ void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
   aluno a;
   while (fread(&a,sizeof(aluno),1,arq)) {
     if (a.cr <= dado)
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
   }
 }
 
@@ -157,19 +157,6 @@ aluno buscaIdABP(FILE *arq, no *indice, int id) {
     return a;
 }
 
-int inserirEmLista(tipoLista *l, aluno a) {
-  tipoNo *aux = (tipoNo *) malloc(sizeof(tipoNo)*8);
-  if (aux) {
-    aux->a = a;
-    aux->prox = l->prim;
-    l->prim = aux;
-    return 1;
-  } else {
-    free(aux);
-    return 0;
-  }
-}
-
 void inserirLista(FILE *arq,no *n, tipoLista *lista) {
   if (n) {
     inserirLista(arq, n->esq, lista);
@@ -177,7 +164,7 @@ void inserirLista(FILE *arq,no *n, tipoLista *lista) {
     fseek(arq,0,SEEK_SET);
     fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
     fread(&a,sizeof(aluno),1,arq);
-    inserirEmLista(lista, a);
+    inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
     inserirLista(arq, n->dir, lista);
   }
 }
@@ -193,7 +180,7 @@ void buscarMaioresABP(FILE *arq, no *n, float dado, tipoLista *lista) {
         fseek(arq,0,SEEK_SET);
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a);
+        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
         inserirLista(arq, n->dir,lista);
       } else
         inserirLista(arq,n->dir, lista);
@@ -212,7 +199,7 @@ void buscarMenoresABP(FILE *arq, no *n, float dado, tipoLista *lista) {
         fseek(arq,0,SEEK_SET);
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a);
+        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
         inserirLista(arq, n->esq, lista);
       }
     }
@@ -228,7 +215,7 @@ void buscarMaioresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista) {
       fseek(arq,0,SEEK_SET);
       fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
       buscarMaioresOuIguaisABP(arq,n->esq,dado,lista);
       inserirLista(arq,n->dir, lista);
     }
@@ -244,41 +231,9 @@ void buscarMenoresOuIguaisABP(FILE *arq, no *n, float dado, tipoLista *lista) {
       fseek(arq,0,SEEK_SET);
       fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
-      inserirEmLista(lista, a);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
       buscarMenoresOuIguaisABP(arq,n->dir,dado,lista);
       inserirLista(arq, n->esq, lista);
     }
-  }
-}
-
-void criar(tipoLista *l){
-  l->prim = NULL;
-}
-
-tipoNo* buscaSequencialLista(tipoLista l, float valor) {
-  while (l.prim != NULL && l.prim->a.id != valor ) {
-    l.prim = l.prim->prox;
-  }
-  return l.prim;
-}
-
-void dropLista(tipoLista *l) {
-  tipoNo *aux;
-  while (l->prim != NULL) {
-    aux = l->prim;
-    l->prim = aux->prox;
-    free(aux);
-  }
-  l->prim = NULL;
-}
-
-void mostrarLista(tipoLista lista) {
-  while (lista.prim) {
-    printf("\nID: %d", lista.prim->a.id);
-    printf("\nNome: %s", (lista.prim->a.nome));
-    printf("\nCR: %f", lista.prim->a.cr);
-    printf("\nCurso: %s", (lista.prim->a.curso));
-    printf("\nIdade: %d\n", lista.prim->a.idade);
-    lista.prim = lista.prim->prox;
   }
 }

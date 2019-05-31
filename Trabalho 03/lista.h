@@ -1,7 +1,9 @@
-// #include "aluno.h"
-
 typedef struct tipoNo{
-  aluno a;
+  int id;
+  char nome[20];
+  float cr;
+  char curso[30];
+  int idade;
   struct tipoNo *prox;
 } tipoNo;
 
@@ -11,7 +13,7 @@ typedef struct tipoLista {
 
 void criar(tipoLista *l);
 
-int inserirEmLista(tipoLista *l, aluno a);
+int inserirEmLista(tipoLista *l, int id, float cr, int idade, char *curso, char *nome);
 
 tipoNo* buscaSequencialLista(tipoLista l, float valor);
 

@@ -2,6 +2,7 @@
 #include "hash.h"
 #include "vetor.h"
 #include "abp.h"
+#include "lista.h"
 
 typedef struct aluno {
     int id;
@@ -12,24 +13,7 @@ typedef struct aluno {
 } aluno;
 
 
-// Lista
-typedef struct tipoNo{
-  aluno a;
-  struct tipoNo *prox;
-} tipoNo;
-
-typedef struct tipoLista {
-  tipoNo *prim;
-} tipoLista;
-
-
 void criar(tipoLista *l);
-
-int inserirEmLista(tipoLista *l, aluno a);
-
-tipoNo* buscaSequencialLista(tipoLista l, float valor);
-
-void mostrarLista(tipoLista lista);
 
 noAVL* indexarIdAVL(FILE* arq, int t);
 
@@ -66,5 +50,3 @@ void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
 no* indexarCrABP(FILE* arq, int tam);
 
 aluno buscaIdABP(FILE *arq, no *indice, int id);
-
-void dropLista(tipoLista *l);

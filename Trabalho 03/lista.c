@@ -1,15 +1,21 @@
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <stdio.h>
 #include "lista.h"
 
 void criar(tipoLista *l){
   l->prim = NULL;
 }
 
-int inserirEmLista(tipoLista *l, aluno a) {
+int inserirEmLista(tipoLista *l, int id, float cr, int idade, char *curso, char *nome) {
   tipoNo *aux = (tipoNo *) malloc(sizeof(tipoNo)*8);
   if (aux) {
-    aux->a = a;
+    aux->id = id;
+    aux->cr = cr;
+    aux->idade = idade;
+    strcpy(aux->curso,curso);
+    strcpy(aux->nome,nome);
     aux->prox = l->prim;
     l->prim = aux;
     return 1;
@@ -20,7 +26,7 @@ int inserirEmLista(tipoLista *l, aluno a) {
 }
 
 tipoNo* buscaSequencialLista(tipoLista l, float valor) {
-  while (l.prim != NULL && l.prim->d.valor != valor ) {
+  while (l.prim != NULL && l.prim->id != valor ) {
     l.prim = l.prim->prox;
   }
   return l.prim;
@@ -38,11 +44,11 @@ void dropLista(tipoLista *l) {
 
 void mostrarLista(tipoLista lista) {
   while (lista.prim) {
-    print("ID: %d", lista.prim->id);
-    print("Nome: %s", &(lista.prim->nome));
-    print("CR: %f", lista.prim->cr);
-    print("Curso: %s", &(lista.prim->curso));
-    print("Idade: %d", lista.prim->idade);
+    printf("\nID: %d", lista.prim->id);
+    printf("\nNome: %s", (lista.prim->nome));
+    printf("\nCR: %f", lista.prim->cr);
+    printf("\nCurso: %s", (lista.prim->curso));
+    printf("\nIdade: %d\n", lista.prim->idade);
     lista.prim = lista.prim->prox;
   }
 }
