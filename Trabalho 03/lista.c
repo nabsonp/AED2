@@ -52,3 +52,12 @@ void mostrarLista(tipoLista lista) {
     lista.prim = lista.prim->prox;
   }
 }
+
+int qtdElementos(tipoLista lista) {
+  int i=0;
+  while (lista.prim) {
+    i++;
+    lista.prim = lista.prim->prox;
+  }
+  return i;
+}

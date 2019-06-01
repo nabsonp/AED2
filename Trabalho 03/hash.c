@@ -1,7 +1,30 @@
 #include "hash.h"
-#include<stdio.h>
 
 int primo = 10007;
+
+int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
+    aluno a;
+    tabelaHash(tamTH, th);
+    int colisoes = 0;
+    fseek(arq,0,SEEK_SET);
+    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++) {
+        if (inserirHash(a.id, i, tamTH, th) == -1)
+            colisoes++;
+    }
+    return colisoes;
+}
+
+aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
+    int indice = buscaHash(id,tamTH, th);
+    aluno a;
+    a.id = -1;
+    if (indice != -1) {
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+    }
+    return a;
+}
 
 int h(int id) {
   return id % primo; // Primo para 100K registros

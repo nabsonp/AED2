@@ -1,7 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#ifndef _ALUNO_H_
 #include "aluno.h"
+#define _ALUNO_H_
+#endif
+#ifndef _HASH_H_
+#include "hash.h"
+#define _HASH_H_
+#endif
+#ifndef _AVL_H_
+#include "avl.h"
+#define _AVL_H_
+#endif
+#ifndef _LISTA_H_
+#include "lista.h"
+#define _LISTA_H_
+#endif
 
 #define vermelho "\x1b[31m"
 #define verde "\x1b[32m"

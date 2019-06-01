@@ -20,3 +20,5 @@ tipoNo* buscaSequencialLista(tipoLista l, float valor);
 void mostrarLista(tipoLista lista);
 
 void dropLista(tipoLista *l);
+
+int qtdElementos(tipoLista lista);

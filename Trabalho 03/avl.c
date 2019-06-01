@@ -1,6 +1,115 @@
 #include "avl.h"
-#include <stdio.h>
-#include <stdlib.h>
+
+noAVL* indexarIdAVL(FILE* arq, int tam) {
+    aluno a;
+    noAVL *arv = criarAVL();
+    fseek(arq,0,SEEK_SET);
+    for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+        arv = inserirEmAVL(arv, a.id, i);
+    return arv;
+}
+
+noAVL* indexarCrAVL(FILE* arq, int tam) {
+  aluno a;
+  noAVL *arv = criarAVL();
+  fseek(arq,0,SEEK_SET);
+  for (int i=0; fread(&a,sizeof(aluno),1,arq); i++)
+      arv = inserirEmAVL(arv, a.cr, i);
+  return arv;
+}
+
+aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
+    noAVL *n = buscaAVL(indice,id);
+    aluno a;
+    a.id = -1;
+    if (n) {
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+    }
+    return a;
+}
+
+void inserirLista(FILE *arq,noAVL *n, tipoLista *lista) {
+  if (n) {
+    inserirLista(arq, n->esq, lista);
+    aluno a;
+    fseek(arq,0,SEEK_SET);
+    fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+    fread(&a,sizeof(aluno),1,arq);
+    inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+    inserirLista(arq, n->dir, lista);
+  }
+}
+
+void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d < dado)
+      buscarMaioresAVL(arq,n->dir,dado,lista);
+    else {
+      if (n->d > dado) {
+        buscarMaioresAVL(arq,n->esq,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+        inserirLista(arq, n->dir,lista);
+      } else
+        inserirLista(arq,n->dir, lista);
+    }
+  }
+}
+
+void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d >= dado)
+      buscarMenoresAVL(arq,n->esq,dado,lista);
+    else {
+      if (n->d < dado) {
+        buscarMenoresAVL(arq,n->dir,dado,lista);
+        aluno a;
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
+        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+        inserirLista(arq, n->esq, lista);
+      }
+    }
+  }
+}
+
+void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d < dado)
+      buscarMaioresOuIguaisAVL(arq,n->dir,dado,lista);
+    else {
+      aluno a;
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+      buscarMaioresOuIguaisAVL(arq,n->esq,dado,lista);
+      inserirLista(arq,n->dir, lista);
+    }
+  }
+}
+
+void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+  if (n) {
+    if (n->d > dado)
+      buscarMenoresOuIguaisAVL(arq,n->esq,dado,lista);
+    else {
+      aluno a;
+      fseek(arq,0,SEEK_SET);
+      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      fread(&a,sizeof(aluno),1,arq);
+      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+      buscarMenoresOuIguaisAVL(arq,n->dir,dado,lista);
+      inserirLista(arq, n->esq, lista);
+    }
+  }
+}
 
 noAVL* criarAVL() {
   return NULL;
