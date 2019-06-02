@@ -14,6 +14,7 @@ void gerarAlunos(FILE* arq, int tam, int buscas[]) {
       buscas[i] = ids[i*330];
     }
     for(i=0; i<tam; i++) {
+        // printf("Id: %d\n", ids[i]);
         a.id = ids[i];
         a.cr = (rand() % 10);
         a.idade = 18 + (rand() % 10);

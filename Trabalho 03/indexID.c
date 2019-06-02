@@ -29,7 +29,7 @@ int main() {
     float media = 0, t;
     hash *indiceHash = (hash*) malloc(sizeof(hash)*tamTH);
     int colisoes = indexarHash(arquivo, tam, tamTH, indiceHash);
-    noAVL *indiceAVL = indexarIdAVL(arquivo, 10000);
+    noAVL *indiceAVL = indexarIdAVL(arquivo, tam);
     clock_t t0;
     aluno a;
 

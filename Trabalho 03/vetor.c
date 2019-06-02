@@ -7,7 +7,7 @@ int* gerarVetorOrdenado(int tam, int vet[]) {
   srand((unsigned) time(&t));
   vet[0] = rand()%20;
   for (int i=1; i<tam; i++) {
-    vet[i] = vet[i-1] + (int) rand()%20;
+    vet[i] = vet[i-1] + 1 + (int) (i/8000);
   }
 }
 
@@ -56,15 +56,21 @@ int buscaBinaria(int tam, int vet[], int valor) {
   return -1;
 }
 
+void shuffleVet(int *array, size_t n){
+    if (n > 1) {
+        size_t i;
+        for (i = 0; i < n - 1; i++) {
+          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+          int t = array[j];
+          array[j] = array[i];
+          array[i] = t;
+        }
+    }
+}
+
 int* gerarVetorDesordenadoSemRepeticoes(int tam, int vet[]) {
-  time_t t;
-  int aux;
-  srand((unsigned) time(&t));
-  for (int i=1; i<tam; i++) {
-    aux = rand()%tam;
-    if (buscaBinaria(tam,vet,aux) == -1) vet[i] = aux;
-    else i--;
-  }
+  gerarVetorOrdenado(tam, vet);
+  shuffleVet(vet,tam);
 }
 
 void duplica(int tam, int vet[], int cpy[]) {
