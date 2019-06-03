@@ -24,7 +24,7 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    int pesq = 30, buscas[pesq], tam = 10000, i, tamTH = tam + (tam/10);
+    int pesq = 30, buscas[pesq], tam = 100000, i, tamTH = 110000;
     gerarAlunos(arquivo, tam, buscas);
     float media = 0, t;
     hash *indiceHash = (hash*) malloc(sizeof(hash)*tamTH);
@@ -40,12 +40,14 @@ int main() {
     for (i=0; i<pesq; i++){
       t0= clock();
       a = buscaIdHash(arquivo,tamTH,indiceHash, buscas[i]);
-      t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
-      media += t;
-      if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
-      else printf(verde "%fs " reset, t); // Achou
+      t = (clock() - t0);
+      if (a.id == -1) printf(vermelho "%.2fms " reset, t); // Não achou
+      else {
+         printf(verde "%.2fms " reset, t); // Achou
+         media += t;
+       }
     }
-    printf("\nTempo médio de buscas: %fs\n", media/pesq);
+    printf("\nTempo médio de buscas: %.2fms\n", media/pesq);
     media = 0;
 
     // AVL
@@ -54,13 +56,15 @@ int main() {
     printf("Tempos das buscas: ");
     for (i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaIdAVL(arquivo,indiceAVL, buscas[i]);
-      t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
-      media += t;
-      if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
-      else printf(verde "%fs " reset, t); // Achou
+      a = buscaIdAVL(arquivo,indiceAVL, buscas[i]);
+      t = (clock() - t0);
+      if (a.id == -1) printf(vermelho "%.2fms " reset, t); // Não achou
+      else {
+         printf(verde "%.2fms " reset, t); // Achou
+         media += t;
+       }
     }
-    printf("\nTempo médio de buscas: %fs\n", media/pesq);
+    printf("\nTempo médio de buscas: %.2fms\n", media/pesq);
     media = 0;
 
     // ARQUIVO
@@ -69,13 +73,15 @@ int main() {
     printf("Tempos das buscas: ");
     for (i=0; i<pesq; i++){
       t0= clock();
-      aluno a = buscaSequencial(arquivo, buscas[i]);
-      t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
-      media += t;
-      if (a.id == -1) printf(vermelho "%fs " reset, t); // Não achou
-      else printf(verde "%fs " reset, t); // Achou
+      a = buscaSequencial(arquivo, buscas[i]);
+      t = (clock() - t0);
+      if (a.id == -1) printf(vermelho "%.2fms " reset, t); // Não achou
+      else {
+         printf(verde "%.2fms " reset, t); // Achou
+         media += t;
+       }
     }
-    printf("\nTempo médio de buscas: %fs\n", media/pesq);
+    printf("\nTempo médio de buscas: %.2fms\n", media/pesq);
 
     fclose(arquivo);
     return 0;

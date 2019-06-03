@@ -1,6 +1,10 @@
 #include "hash.h"
 
-int primo = 10007;
+int primo = 100007;
+
+int h(int id) {
+  return id % primo; // Primo para 100K registros
+}
 
 int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
     aluno a;
@@ -15,37 +19,29 @@ int indexarHash(FILE* arq, int tam, int tamTH, hash th[]) {
 }
 
 aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
-    int indice = buscaHash(id,tamTH, th);
+    int indice = -1, i = id % primo;
     aluno a;
     a.id = -1;
-    if (indice != -1) {
-      fseek(arq,0,SEEK_SET);
-      fseek(arq,indice*sizeof(aluno),SEEK_SET);
-      fread(&a,sizeof(aluno),1,arq);
-    }
-    return a;
-}
-
-int h(int id) {
-  return id % primo; // Primo para 100K registros
-}
-
-int buscaHash(int id, int tam, hash ht[]) {
-  int i = h(id);
-  if (ht[i].id == -1)
-    return -1; // Código de registro não encontrado
-  else {
-    if (id == ht[i].id)
-      return ht[i].indice; // Retorna o índice do registro no arquivo
-    else {
-      // Busca sequencial na área de overflow
-      for (i=primo; ht[i].id != -1 && i<tam; i++) {
-        if (id == ht[i].id)
-          return ht[i].indice;
+    if (th[i].id != -1) {
+      if (id == th[i].id)
+        indice = th[i].indice; // Retorna o índice do registro no arquivo
+      else {
+        // Busca sequencial na área de overflow
+        for (i=primo;i<tamTH && th[i].id != -1; i++) {
+          if (id == th[i].id) {
+            indice = th[i].indice;
+            printf("colidiu->");
+            break;
+          }
+        }
+      }
+      if (indice != -1) {
+        fseek(arq,0,SEEK_SET);
+        fseek(arq,indice*sizeof(aluno),SEEK_SET);
+        fread(&a,sizeof(aluno),1,arq);
       }
     }
-  }
-  return -1;
+    return a;
 }
 
 int inserirHash(int id, int indice, int tam, hash th[]) {
@@ -59,9 +55,10 @@ int inserirHash(int id, int indice, int tam, hash th[]) {
   } else {
     // Deu colisão, então manda para a área de overflow
     for (i=primo; i<tam; i++) {
-      if (th[i].id == -1)
+      if (th[i].id == -1) {
         th[i] = hs;
         return -1;
+      }
     }
   }
   return 0; // Código de tabela cheia, impossível inserir
@@ -69,6 +66,7 @@ int inserirHash(int id, int indice, int tam, hash th[]) {
 
 void tabelaHash(int tam, hash th[]){
   for (int i=0; i<tam; i++) {
+    // Coloca o marcador na tabela de hash vazio
     th[i].id = -1;
   }
 }
