@@ -1,6 +1,6 @@
 #include "hash.h"
 
-int primo = 100007;
+int primo = 100003;
 
 int h(int id) {
   return id % primo; // Primo para 100K registros

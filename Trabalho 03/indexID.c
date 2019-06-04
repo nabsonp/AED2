@@ -24,7 +24,7 @@
 
 int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
-    int pesq = 30, buscas[pesq], tam = 100000, i, tamTH = 110000;
+    int pesq = 30, buscas[pesq], tam = 100000, i, tamTH = 200000;
     gerarAlunos(arquivo, tam, buscas);
     float media = 0, t;
     hash *indiceHash = (hash*) malloc(sizeof(hash)*tamTH);

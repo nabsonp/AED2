@@ -11,7 +11,7 @@ void gerarAlunos(FILE* arq, int tam, int buscas[]) {
       buscas[i] = -1;
     }
     for (i=10; i < 30; i++) {
-      buscas[i] = ids[i*330];
+      buscas[i] = ids[i*3300];
     }
     for(i=0; i<tam; i++) {
         // printf("Id: %d\n", ids[i]);
