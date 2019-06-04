@@ -34,7 +34,6 @@ void inserirLista(FILE *arq,noAVL *n, tipoLista *lista) {
   if (n) {
     inserirLista(arq, n->esq, lista);
     aluno a;
-    fseek(arq,0,SEEK_SET);
     fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
     fread(&a,sizeof(aluno),1,arq);
     inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
@@ -44,19 +43,17 @@ void inserirLista(FILE *arq,noAVL *n, tipoLista *lista) {
 
 void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
   if (n) {
-    if (n->d < dado)
+    if (n->d <= dado)
       buscarMaioresAVL(arq,n->dir,dado,lista);
     else {
       if (n->d > dado) {
         buscarMaioresAVL(arq,n->esq,dado,lista);
         aluno a;
-        fseek(arq,0,SEEK_SET);
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
         inserirLista(arq, n->dir,lista);
-      } else
-        inserirLista(arq,n->dir, lista);
+      }
     }
   }
 }
@@ -69,7 +66,6 @@ void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
       if (n->d < dado) {
         buscarMenoresAVL(arq,n->dir,dado,lista);
         aluno a;
-        fseek(arq,0,SEEK_SET);
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
@@ -85,7 +81,6 @@ void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista)
       buscarMaioresOuIguaisAVL(arq,n->dir,dado,lista);
     else {
       aluno a;
-      fseek(arq,0,SEEK_SET);
       fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
       inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
@@ -101,7 +96,6 @@ void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista)
       buscarMenoresOuIguaisAVL(arq,n->esq,dado,lista);
     else {
       aluno a;
-      fseek(arq,0,SEEK_SET);
       fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
       fread(&a,sizeof(aluno),1,arq);
       inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
@@ -192,7 +186,6 @@ noAVL* inserirEmAVL(noAVL *n, int d, int ind){
     if (n != NULL) {
       if (d <= n->d) n->esq = inserirEmAVL(n->esq,d,ind);
       else n->dir = inserirEmAVL(n->dir,d,ind);
-
       n->altura = 1 + (alturaAVL(n->esq) > alturaAVL(n->dir) ? alturaAVL(n->esq) : alturaAVL(n->dir));
       noAVL *newroot = NULL;
       int f = fb(n);

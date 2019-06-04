@@ -36,7 +36,6 @@ aluno buscaIdHash(FILE *arq, int tamTH, hash th[], int id) {
         }
       }
       if (indice != -1) {
-        fseek(arq,0,SEEK_SET);
         fseek(arq,indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
       }
