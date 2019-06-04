@@ -16,7 +16,7 @@ void gerarAlunos(FILE* arq, int tam, int buscas[]) {
     for(i=0; i<tam; i++) {
         // printf("Id: %d\n", ids[i]);
         a.id = ids[i];
-        a.cr = (rand() % 10) + (i/2 - i/2.0);
+        a.cr = (rand() % 10);// + (i/2 - i/2.0);
         a.idade = 18 + (rand() % 10);
         strcpy(a.curso,"Ciência da Computação");
         strcpy(a.nome,"Aluno");

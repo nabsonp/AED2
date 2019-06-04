@@ -52,7 +52,7 @@ void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-        inserirLista(arq, n->dir,lista);
+        buscarMaioresAVL(arq,n->dir,dado,lista);
       }
     }
   }
@@ -69,7 +69,7 @@ void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
         fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
         fread(&a,sizeof(aluno),1,arq);
         inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-        inserirLista(arq, n->esq, lista);
+        buscarMenoresAVL(arq,n->esq,dado,lista);
       }
     }
   }
