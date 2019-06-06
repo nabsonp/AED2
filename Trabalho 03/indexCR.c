@@ -13,10 +13,6 @@
 #include "avl.h"
 #define _AVL_H_
 #endif
-#ifndef _LISTA_H_
-#include "lista.h"
-#define _LISTA_H_
-#endif
 
 #define vermelho "\x1b[31m"
 #define verde "\x1b[32m"
@@ -27,75 +23,70 @@ int main() {
     FILE* arquivo = (FILE*) fopen("alunos","wb+");
     gerarAlunos(arquivo, tam, buscas);
     noAVL *indice = indexarCrAVL(arquivo, tam);
-    tipoLista *lista = (tipoLista*) malloc(sizeof(tipoLista));
-    criar(lista);
     float temposAVL[4] = {0,0,0,0}, temposArq[4]={0,0,0,0}, t;
     float valores[30] = {-1,-1,-1,-1,-1,10,10,10,10,10,0,0.5,1,1.5,2,2.5,3,3.5,
     4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5};
     clock_t t0;
+    int *qtd;
 
     for (int j=0; j<30; j++) {
       printf("-> %dª busca, valor: %.2f",j+1,valores[j]);
 
       printf(verde "\n\t******* Busca por intervalos em AVL *******\n" reset);
       printf(verde "\tMenores que %.2f:" reset, valores[j]);
+      *qtd = 0;
       t0= clock();
-      buscarMenoresAVL(arquivo,indice,valores[j],lista);
+      buscarMenoresAVL(arquivo,indice,valores[j],qtd);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd,t);
       temposAVL[0] += t;
-      dropLista(lista);
       printf(verde "\tMenores ou iguais a %.2f:" reset, valores[j]);
+      *qtd = 0;
       t0= clock();
-      buscarMenoresOuIguaisAVL(arquivo,indice,valores[j],lista);
+      buscarMenoresOuIguaisAVL(arquivo,indice,valores[j],qtd);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd,t);
       temposAVL[1] += t;
-      dropLista(lista);
       printf(verde "\tMaiores que %.2f:" reset, valores[j]);
+      *qtd = 0;
       t0= clock();
-      buscarMaioresAVL(arquivo,indice,valores[j],lista);
+      buscarMaioresAVL(arquivo,indice,valores[j],qtd);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd,t);
       temposAVL[2] += t;
-      dropLista(lista);
       printf(verde "\tMaiores ou iguais a %.2f:" reset, valores[j]);
+      *qtd = 0;
       t0= clock();
-      buscarMaioresOuIguaisAVL(arquivo,indice,valores[j],lista);
+      buscarMaioresOuIguaisAVL(arquivo,indice,valores[j],qtd);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd,t);
       temposAVL[3] += t;
-      dropLista(lista);
 
       printf(vermelho "\n\t******* Busca por intervalos em Arquivo *******\n" reset);
       printf(vermelho "\tMenores que %.2f:" reset, valores[j]);
       t0= clock();
-      buscarMenoresArq(arquivo,valores[j],lista);
+      *qtd = buscarMenoresArq(arquivo,valores[j]);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd, t);
       temposArq[0] += t;
-      dropLista(lista);
       printf(vermelho "\tMenores ou iguais a %.2f:" reset, valores[j]);
       t0= clock();
-      buscarMenoresOuIguaisArq(arquivo,valores[j],lista);
+      *qtd = buscarMenoresOuIguaisArq(arquivo,valores[j]);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd, t);
       temposArq[1] += t;
-      dropLista(lista);
       printf(vermelho "\tMaiores que %.2f:" reset, valores[j]);
       t0= clock();
-      buscarMaioresArq(arquivo,valores[j],lista);
+      *qtd = buscarMaioresArq(arquivo,valores[j]);
       t = (clock() - t0);
-      printf("%d em %.2fms\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n", *qtd, t);
       temposArq[2] += t;
-      dropLista(lista);
       printf(vermelho "\tMaiores ou iguais a %.2f:" reset, valores[j]);
       t0= clock();
-      buscarMaioresOuIguaisArq(arquivo,valores[j],lista);
+      *qtd = buscarMaioresOuIguaisArq(arquivo,valores[j]);
       t = (clock() - t0);
-      printf("%d em %.2fms\n\n", qtdElementos(*lista),t);
+      printf("%d em %.2fms\n\n", *qtd, t);
       temposArq[3] += t;
-      dropLista(lista);
     }
 
     printf("--------------------------------------------------------");

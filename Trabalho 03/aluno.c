@@ -46,38 +46,42 @@ aluno buscaSequencial(FILE *arq, int id) {
   return a;
 }
 
-void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) {
+int buscarMaioresArq(FILE *arq, float dado) {
   fseek(arq,0,SEEK_SET);
   aluno a;
+  int i = 0;
   while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr > dado)
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+    if (a.cr > dado) i++;
   }
+  return i;
 }
 
-void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista) {
+int buscarMenoresArq(FILE *arq, float dado) {
   fseek(arq,0,SEEK_SET);
   aluno a;
+  int i = 0;
   while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr < dado)
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+    if (a.cr < dado) i++;
   }
+  return i;
 }
 
-void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+int buscarMaioresOuIguaisArq(FILE *arq, float dado) {
   fseek(arq,0,SEEK_SET);
   aluno a;
+  int i = 0;
   while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr >= dado)
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+    if (a.cr >= dado) i++;
   }
+  return i;
 }
 
-void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista) {
+int buscarMenoresOuIguaisArq(FILE *arq, float dado) {
   fseek(arq,0,SEEK_SET);
   aluno a;
+  int i = 0;
   while (fread(&a,sizeof(aluno),1,arq)) {
-    if (a.cr <= dado)
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
+    if (a.cr <= dado) i++;
   }
+  return i;
 }

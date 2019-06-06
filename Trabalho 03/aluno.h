@@ -3,11 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "vetor.h"
-#ifndef _LISTA_H_
-#include "lista.h"
-#define _LISTA_H_
-#endif
-// #include "lista.h"
 
 typedef struct aluno {
     int id;
@@ -24,10 +19,10 @@ aluno buscaSequencial(FILE *arq, int id);
 
 void mostrarArquivo(FILE* arq);
 
-void buscarMaioresArq(FILE *arq, float dado, tipoLista *lista) ;
+int buscarMaioresArq(FILE *arq, float dado) ;
 
-void buscarMenoresArq(FILE *arq, float dado, tipoLista *lista);
+int buscarMenoresArq(FILE *arq, float dado);
 
-void buscarMaioresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
+int buscarMaioresOuIguaisArq(FILE *arq, float dado);
 
-void buscarMenoresOuIguaisArq(FILE *arq, float dado, tipoLista *lista);
+int buscarMenoresOuIguaisArq(FILE *arq, float dado);

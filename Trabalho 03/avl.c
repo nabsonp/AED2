@@ -30,77 +30,82 @@ aluno buscaIdAVL(FILE *arq, noAVL *indice, int id) {
     return a;
 }
 
-void inserirLista(FILE *arq,noAVL *n, tipoLista *lista) {
+void carregarArvore(FILE *arq,noAVL *n, int *qtd) {
   if (n) {
-    inserirLista(arq, n->esq, lista);
+    carregarArvore(arq, n->esq, qtd);
     aluno a;
-    fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+    int d = n->indice*sizeof(aluno) - ftell(arq);
+    fseek(arq,d,SEEK_CUR);
     fread(&a,sizeof(aluno),1,arq);
-    inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-    inserirLista(arq, n->dir, lista);
+    (*qtd)++;
+    carregarArvore(arq, n->dir, qtd);
   }
 }
 
-void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+void buscarMaioresAVL(FILE *arq, noAVL *n, float dado, int *qtd) {
   if (n) {
     if (n->d <= dado)
-      buscarMaioresAVL(arq,n->dir,dado,lista);
+      buscarMaioresAVL(arq,n->dir,dado,qtd);
     else {
       if (n->d > dado) {
-        buscarMaioresAVL(arq,n->esq,dado,lista);
+        buscarMaioresAVL(arq,n->esq,dado,qtd);
         aluno a;
-        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+        int d = n->indice*sizeof(aluno) - ftell(arq);
+        fseek(arq,d,SEEK_CUR);
         fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-        buscarMaioresAVL(arq,n->dir,dado,lista);
+        (*qtd)++;
+        buscarMaioresAVL(arq,n->dir,dado,qtd);
       }
     }
   }
 }
 
-void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+void buscarMenoresAVL(FILE *arq, noAVL *n, float dado, int *qtd) {
   if (n) {
     if (n->d >= dado)
-      buscarMenoresAVL(arq,n->esq,dado,lista);
+      buscarMenoresAVL(arq,n->esq,dado,qtd);
     else {
       if (n->d < dado) {
-        buscarMenoresAVL(arq,n->dir,dado,lista);
+        buscarMenoresAVL(arq,n->dir,dado,qtd);
         aluno a;
-        fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+        int d = n->indice*sizeof(aluno) - ftell(arq);
+        fseek(arq,d,SEEK_CUR);
         fread(&a,sizeof(aluno),1,arq);
-        inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-        buscarMenoresAVL(arq,n->esq,dado,lista);
+        (*qtd)++;
+        buscarMenoresAVL(arq,n->esq,dado,qtd);
       }
     }
   }
 }
 
-void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+void buscarMaioresOuIguaisAVL(FILE *arq, noAVL *n, float dado, int *qtd) {
   if (n) {
     if (n->d < dado)
-      buscarMaioresOuIguaisAVL(arq,n->dir,dado,lista);
+      buscarMaioresOuIguaisAVL(arq,n->dir,dado,qtd);
     else {
       aluno a;
-      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      int d = n->indice*sizeof(aluno) - ftell(arq);
+      fseek(arq,d,SEEK_CUR);
       fread(&a,sizeof(aluno),1,arq);
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-      buscarMaioresOuIguaisAVL(arq,n->esq,dado,lista);
-      inserirLista(arq,n->dir, lista);
+      (*qtd)++;
+      buscarMaioresOuIguaisAVL(arq,n->esq,dado,qtd);
+      carregarArvore(arq,n->dir, qtd);
     }
   }
 }
 
-void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *n, float dado, tipoLista *lista) {
+void buscarMenoresOuIguaisAVL(FILE *arq, noAVL *n, float dado, int *qtd) {
   if (n) {
     if (n->d > dado)
-      buscarMenoresOuIguaisAVL(arq,n->esq,dado,lista);
+      buscarMenoresOuIguaisAVL(arq,n->esq,dado,qtd);
     else {
       aluno a;
-      fseek(arq,n->indice*sizeof(aluno),SEEK_SET);
+      int d = n->indice*sizeof(aluno) - ftell(arq);
+      fseek(arq,d,SEEK_CUR);
       fread(&a,sizeof(aluno),1,arq);
-      inserirEmLista(lista, a.id, a.cr, a.idade,a.curso,a.nome);
-      buscarMenoresOuIguaisAVL(arq,n->dir,dado,lista);
-      inserirLista(arq, n->esq, lista);
+      (*qtd)++;
+      buscarMenoresOuIguaisAVL(arq,n->dir,dado,qtd);
+      carregarArvore(arq, n->esq, qtd);
     }
   }
 }
