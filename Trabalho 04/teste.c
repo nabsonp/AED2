@@ -2,8 +2,10 @@
 #include "grafo.h"
 
 int main() {
-    int grafo[10][10];
-    criarGrafo(10,grafo,0.5);
-    mostrarGrafo(10,grafo);
-    return 0;
+  int tam = 80;
+  int grafo[tam][tam];
+  int n = criarGrafo(tam,grafo,0.5);
+  mostrarGrafo(tam,grafo);
+  printf("\n\t -> %d vértices setados\n", n);
+  return 0;
 }
