@@ -7,7 +7,7 @@ int* gerarVetorOrdenado(int tam, int vet[]) {
   srand((unsigned) time(&t));
   vet[0] = rand()%20;
   for (int i=1; i<tam; i++) {
-    vet[i] = vet[i-1] + 1 + (int) (i/80000);
+    vet[i] = vet[i-1] + 1 + (int) (i/800000);
   }
 }
 

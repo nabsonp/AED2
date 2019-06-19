@@ -13,10 +13,6 @@
 #include "avl.h"
 #define _AVL_H_
 #endif
-#ifndef _LISTA_H_
-#include "lista.h"
-#define _LISTA_H_
-#endif
 
 #define vermelho "\x1b[31m"
 #define verde "\x1b[32m"

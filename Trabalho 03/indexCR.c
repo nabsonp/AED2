@@ -31,7 +31,6 @@ int main() {
 
     for (int j=0; j<30; j++) {
       printf("-> %dª busca, valor: %.2f",j+1,valores[j]);
-
       printf(verde "\n\t******* Busca por intervalos em AVL *******\n" reset);
       printf(verde "\tMenores que %.2f:" reset, valores[j]);
       *qtd = 0;
