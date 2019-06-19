@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-int criarGrafo(int t, int grafo[t][t], float conec);
+typedef struct vertice {
+  int dado;
+  char cor;
+  int distancia;
+} vertice;
 
-void mostrarGrafo(int t, int grafo[t][t]);
+int criarGrafo(int t, vertice **grafo, float conec);
+
+void mostrarGrafo(int t, vertice **grafo);
