@@ -1,9 +1,5 @@
-typedef struct {
-  int valor;
-} tipoDados;
-
 typedef struct tipoNo{
-  tipoDados d;
+  int dado;
   struct tipoNo *prox;
 } tipoNo;
 
@@ -13,14 +9,12 @@ typedef struct {
 
 void criar(tipoLista *l);
 
-int inserir(tipoLista *l, tipoDados d);
+int inserirEmLista(tipoLista *l, int d);
 
 int remover(tipoLista *l, int id);
-
-void listaDesordenada(tipoLista *l, int tam);
-
-void converteVetor(tipoLista *l, int tam, int vet[]);
 
 tipoNo* buscaSequencialLista(tipoLista l, int valor);
 
 void dropLista(tipoLista *l);
+
+void mostrarLista(tipoLista l);

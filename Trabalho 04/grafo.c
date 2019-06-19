@@ -1,4 +1,8 @@
 #include "grafo.h"
+#ifndef _LISTA_H_
+#include "lista.h"
+#define _LISTA_H_
+#endif
 
 #define verde "\x1b[32m"
 #define reset   "\x1b[0m"
@@ -38,6 +42,19 @@ void mostrarGrafo(int t, int grafo[t][t]) {
     printf("\n");
 }
 
-void DFS(int t, int grafo[t][t], tipoLista *l) {
-
+void DFS(int t, int grafo[t][t], tipoLista *l, int inicio) {
+  char cor[t];
+  int i=0, cam = inicio;
+  for (i=1; i<t; i++) cor[i] = 0;
+  cor[inicio] = 1;
+  inserirEmLista(l,cam);
+  busca:
+  for (i=1; i<t; i++) {
+    if (grafo[cam][i] == 1 && cor[i] == 0) {
+      cam = i;
+      cor[i] = 1;
+      inserirEmLista(l,cam);
+      goto busca;
+    }
+  }
 }
