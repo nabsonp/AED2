@@ -18,3 +18,5 @@ tipoNo* buscaSequencialLista(tipoLista l, int valor);
 void dropLista(tipoLista *l);
 
 void mostrarLista(tipoLista l);
+
+void mostrarListaInversa(tipoNo *l);

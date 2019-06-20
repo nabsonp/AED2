@@ -56,6 +56,13 @@ void mostrarLista(tipoLista l) {
   }
 }
 
+void mostrarListaInversa(tipoNo *l) {
+  if (l) {
+      mostrarListaInversa(l->prox);
+      printf("%d ", l->dado);
+  }
+}
+
 void dropLista(tipoLista *l) {
   tipoNo *aux;
   while (l->prim != NULL) {
