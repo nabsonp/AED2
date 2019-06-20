@@ -32,7 +32,7 @@ int criarGrafo(int t, int grafo[t][t], float conec) {
 }
 
 void mostrarGrafo(int t, int grafo[t][t]) {
-    printf("-> %d vértices\n\t  ", t*t);
+    printf("-> Grafo com %d vértices:\n\t  ", t);
     for (int i=0; i<t; i++) printf(azul "%d " reset,i);
     for (int i=0; i<t; i++) {
         printf(azul "\n\t%d " reset,i);
@@ -44,19 +44,30 @@ void mostrarGrafo(int t, int grafo[t][t]) {
     printf("\n");
 }
 
-void DFS(int t, int grafo[t][t], tipoLista *l, int inicio) {
-  char cor[t];
+void DFS_rec(int t, int grafo[t][t], tipoLista *l, int inicio, int ant, char cor[]) {
   int i, cam = inicio;
-  for (i=0; i<t; i++) cor[i] = 0;
-  cor[inicio] = 1;
-  inserirEmLista(l,cam);
-  busca:
+  // inserirEmLista(l,cam);
+  printf("%d ", cam);
   for (i=0; i<t; i++) {
     if (grafo[cam][i] == 1 && cor[i] == 0) {
       cam = i;
       cor[i] = 1;
-      inserirEmLista(l,cam);
-      // goto busca;
+      // inserirEmLista(l,cam);
+      DFS_rec(t, grafo, l, cam, inicio, cor);
     }
   }
+  // for (i=0; i<t; i++) {
+  //   if (cor[i] == 0){
+  //     printf("\n\t\t");
+  //     DFS_rec(t, grafo, l, ant, , cor);
+  //     goto busca;
+  //   }
+  // }
+}
+
+void DFS(int t, int grafo[t][t], tipoLista *l, int inicio) {
+  char cor[t];
+  for (int i=0; i<t; i++) cor[i] = 0;
+  cor[inicio] = 1;
+  DFS_rec(t, grafo, l, inicio, inicio, cor);
 }
