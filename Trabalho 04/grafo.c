@@ -1,7 +1,7 @@
 #include "grafo.h"
-#ifndef _LISTA_H_
-#include "lista.h"
-#define _LISTA_H_
+#ifndef _FILA_H_
+#include "fila.h"
+#define _FILA_H_
 #endif
 
 #define verde "\x1b[32m"
@@ -45,14 +45,14 @@ void mostrarGrafo(int t, int grafo[t][t]) {
 }
 
 int DFS_rec(int t, int grafo[t][t], int inicio, char cor[]) {
-  int aux = 0;
+  int bt = 0;
   printf("%d ", inicio);
   for (int i=0; i<t; i++) {
     if (grafo[inicio][i] == 1 && cor[i] == 0) {
-      cor[i] = 1;
-      if (aux) printf("\n\t\t... %d ", inicio);
+      cor[i] = 1; // Pinta de cinza
+      if (bt) printf("\n\t\t... %d ", inicio); // BackTracking
       DFS_rec(t, grafo, i, cor);
-      aux = 1;
+      bt = 1;
     }
   }
   cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
@@ -62,14 +62,30 @@ void DFS(int t, int grafo[t][t], int inicio) {
   int i;
   char cor[t];
   printf("\n\t\t");
-  for (i=0; i<t; i++) cor[i] = 0;
+  for (i=0; i<t; i++) cor[i] = 0; // Colore todos de branco
   cor[inicio] = 1;
-  DFS_rec(t, grafo, inicio, cor);
+  DFS_rec(t, grafo, inicio, cor); // Realiza a DFS recursivamente
+  // Verifica se tem algum vértice desconexo que não foi visitado
   for (i=0; i<t; i++) {
     if (cor[i] == 0) {
       printf("\n\t\t-\n\t\t");
       cor[i] = 1;
       DFS_rec(t, grafo, i, cor);
     }
+  }
+}
+
+void BFS(int t, int grafo[t][t], int inicio) {
+  tipoFila *fila = (tipoFila*) malloc(sizeof(tipoFila));
+  criar(fila);
+  int i, prox;
+  // printf("%d\n", inicio);
+  prox = inicio;
+  while (prox != -1) { // Código para fila vazia
+    printf("%d ", i);
+    for (int i=0; i<t; i++) {
+        if (grafo[prox][i] == 1) enfileirarSemRepeticao(fila, i);
+    }
+    prox = desenfileirar(fila);
   }
 }

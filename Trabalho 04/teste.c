@@ -1,9 +1,5 @@
 #include<stdio.h>
 #include "grafo.h"
-#ifndef _LISTA_H_
-#include "lista.h"
-#define _LISTA_H_
-#endif
 
 int main() {
   int tam = 6;
@@ -14,7 +10,8 @@ int main() {
   mostrarGrafo(tam,grafo);
   printf("\tDFS: ");
   DFS(tam,grafo,0);
-  // mostrarListaInversa(lista->prim);
+  printf("\n\tBFS: ");
+  BFS(tam,grafo,0);
   printf("\n\t -> %d arestas setadas (%.1f%% de conectividade).\n", n, conec*100);
   return 0;
 }
