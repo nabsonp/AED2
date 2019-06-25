@@ -44,30 +44,32 @@ void mostrarGrafo(int t, int grafo[t][t]) {
     printf("\n");
 }
 
-void DFS_rec(int t, int grafo[t][t], tipoLista *l, int inicio, int ant, char cor[]) {
-  int i, cam = inicio;
-  // inserirEmLista(l,cam);
-  printf("%d ", cam);
-  for (i=0; i<t; i++) {
-    if (grafo[cam][i] == 1 && cor[i] == 0) {
-      cam = i;
+int DFS_rec(int t, int grafo[t][t], int inicio, char cor[]) {
+  int aux = 0;
+  printf("%d ", inicio);
+  for (int i=0; i<t; i++) {
+    if (grafo[inicio][i] == 1 && cor[i] == 0) {
       cor[i] = 1;
-      // inserirEmLista(l,cam);
-      DFS_rec(t, grafo, l, cam, inicio, cor);
+      if (aux) printf("\n\t\t... %d ", inicio);
+      DFS_rec(t, grafo, i, cor);
+      aux = 1;
     }
   }
-  // for (i=0; i<t; i++) {
-  //   if (cor[i] == 0){
-  //     printf("\n\t\t");
-  //     DFS_rec(t, grafo, l, ant, , cor);
-  //     goto busca;
-  //   }
-  // }
+  cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
 }
 
-void DFS(int t, int grafo[t][t], tipoLista *l, int inicio) {
+void DFS(int t, int grafo[t][t], int inicio) {
+  int i;
   char cor[t];
-  for (int i=0; i<t; i++) cor[i] = 0;
+  printf("\n\t\t");
+  for (i=0; i<t; i++) cor[i] = 0;
   cor[inicio] = 1;
-  DFS_rec(t, grafo, l, inicio, inicio, cor);
+  DFS_rec(t, grafo, inicio, cor);
+  for (i=0; i<t; i++) {
+    if (cor[i] == 0) {
+      printf("\n\t\t-\n\t\t");
+      cor[i] = 1;
+      DFS_rec(t, grafo, i, cor);
+    }
+  }
 }
