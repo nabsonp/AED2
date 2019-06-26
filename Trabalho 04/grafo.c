@@ -110,5 +110,5 @@ void BFS(int t, int grafo[t][t], int inicio) {
   for (i=0; i<t; i++) printf("%d ",i);
   printf(reset "\n\t\tDistâncias: "verde);
   for (i=0; i<t; i++) printf("%d ",distancia[i]);
-  printf(reset "\n");
+  printf(reset);
 }
