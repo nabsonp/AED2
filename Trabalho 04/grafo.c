@@ -70,8 +70,9 @@ int DFS_rec(int t, int grafo[t][t], int inicio, char cor[], char *ciclo) {
       cor[i] = 1; // Pinta de cinza
       if (bt) printf("\n\t\t... %d ", inicio); // Backtracking
       DFS_rec(t, grafo, i, cor, ciclo);
+      cor[i] = 0;
       bt = 1;
-    } else if (cor[i] != 0) *ciclo = 1;
+    } else if (cor[i] != 0) *ciclo = 83;
   }
   cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
 }
@@ -79,20 +80,14 @@ int DFS_rec(int t, int grafo[t][t], int inicio, char cor[], char *ciclo) {
 char DFS(int t, int grafo[t][t], int inicio) {
   int i;
   char cor[t], *ciclo = (char*) malloc(sizeof(char));
-  *ciclo = 0;
+  *ciclo = 78;
   printf("\n\t\t");
   for (i=0; i<t; i++) cor[i] = 0; // Colore todos de branco
   cor[inicio] = 1;
   DFS_rec(t, grafo, inicio, cor, ciclo); // Realiza a DFS recursivamente
-  // Verifica se tem algum vértice desconexo que não foi visitado
-  for (i=0; i<t; i++) {
-    if (cor[i] == 0) {
-      printf("\n\t\t-\n\t\t");
-      cor[i] = 1;
-      DFS_rec(t, grafo, i, cor, ciclo);
-    }
-  }
-  return *ciclo;
+  i = *ciclo;
+  free(ciclo);
+  return i;
 }
 
 void BFS(int t, int grafo[t][t], int inicio) {
@@ -102,17 +97,18 @@ void BFS(int t, int grafo[t][t], int inicio) {
   distancia[inicio] = 0;
   criar(fila);
   prox = inicio;
-  // printf("\n\t %d\n\t",inicio);
   while (prox != -1) { // Código  para fila vazia
     for (i=0; i<t; i++) {
         if (grafo[prox][i] == 1 && distancia[i] == -1) {
           enfileirarSemRepeticao(fila, i);
           distancia[i] = distancia[prox]+1;
-          // printf("%d ", i);
         }
     }
-    // printf("\n\t");
     prox = desenfileirar(fila);
   }
+  printf("\n\t\tVértices:   "azul);
+  for (i=0; i<t; i++) printf("%d ",i);
+  printf(reset "\n\t\tDistâncias: "verde);
   for (i=0; i<t; i++) printf("%d ",distancia[i]);
+  printf(reset "\n");
 }

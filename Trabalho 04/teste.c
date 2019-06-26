@@ -8,11 +8,11 @@ int main() {
   int grafo[tam][tam];
   int n = criarGrafo(tam,grafo,conec);
   mostrarGrafo(tam,grafo);
-  printf("\tDFS: ");
+  printf("\t -> %d arestas setadas (%.1f%% de conectividade).\n\n", n, conec*100);
+  printf("\t------------- DFS -------------");
   char ciclo = DFS(tam,grafo,0);
-  printf("\n\t-> Ciclo? %d",ciclo);
-  printf("\n\tBFS: ");
+  printf("\n\t   -> Ciclo? %c",ciclo);
+  printf("\n\n\t------------- BFS -------------");
   BFS(tam,grafo,0);
-  printf("\n\t -> %d arestas setadas (%.1f%% de conectividade).\n", n, conec*100);
   return 0;
 }
