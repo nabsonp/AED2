@@ -9,7 +9,8 @@ int main() {
   int n = criarGrafo(tam,grafo,conec);
   mostrarGrafo(tam,grafo);
   printf("\tDFS: ");
-  DFS(tam,grafo,0);
+  char ciclo = DFS(tam,grafo,0);
+  printf("\n\t-> Ciclo? %d",ciclo);
   printf("\n\tBFS: ");
   BFS(tam,grafo,0);
   printf("\n\t -> %d arestas setadas (%.1f%% de conectividade).\n", n, conec*100);

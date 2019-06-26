@@ -14,7 +14,7 @@ int enfileirarSemRepeticao(tipoFila *l, int d) {
     if (aux->dado == d) return -1; // Já está na fila
     aux = aux->prox;
   }
-  aux = (tipoNo *) malloc(sizeof(tipoNo)*8);
+  aux = (tipoNo *) malloc(sizeof(tipoNo));
   if (aux) {
     aux->dado = d;
     if (!l->prim) l->prim = aux;
