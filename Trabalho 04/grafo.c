@@ -63,7 +63,7 @@ int alterarConectividade(int t, int grafo[t][t], float conec) {
 }
 
 int DFS_rec(int t, int grafo[t][t], int inicio, char cor[], char *ciclo) {
-  int bt = 0;
+  int bt = 0, aux = 0;
   printf("%d ", inicio);
   for (int i=0; i<t; i++) {
     if (grafo[inicio][i] == 1 && cor[i] == 0) {
@@ -72,7 +72,8 @@ int DFS_rec(int t, int grafo[t][t], int inicio, char cor[], char *ciclo) {
       DFS_rec(t, grafo, i, cor, ciclo);
       cor[i] = 0;
       bt = 1;
-    } else if (cor[i] != 0) *ciclo = 83;
+    }
+    if (grafo[inicio][i] == 1 && cor[i] != 0) if (aux == 1) *ciclo = 83; else aux = 1;
   }
   cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
 }
