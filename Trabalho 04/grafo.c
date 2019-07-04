@@ -19,6 +19,13 @@ int criarGrafo(int t, int **grafo, float conec) {
     }
     time_t tmp;
     srand((unsigned) time(&tmp));
+    i = 0;
+    while(qtd > 0 && i < t-1) {
+      grafo[i][i+1] = 1;
+      grafo[i+1][i] = 1;
+      i++;
+      qtd--;
+    }
     for (int n=0; n<qtd; n++) {
         i = rand() % t;
         j = rand() % t;
