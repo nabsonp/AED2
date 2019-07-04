@@ -9,7 +9,7 @@ int main() {
   clock_t t0;
 
   // Grafo 1
-  int tam = 10000;
+  int tam = 1000;
   int **grafo1 = (int**) malloc(sizeof(int*)*tam);
   for (i=0; i<tam; i++) grafo1[i] = (int*) malloc(sizeof(int)*tam);
   for (i=1; i<5; i++) {
@@ -22,9 +22,9 @@ int main() {
     printf("Iniciar DFS? \n");
     scanf("%c", &a);
     t0 = clock();
-    DFS(tam,grafo1,0,0);
+    DFS(tam,grafo1,0,1);
     t = (clock() - t0)/ (double) CLOCKS_PER_SEC;
-    printf("Tempo de DFS: %fs\n", t);
+    printf("\n-> Tempo de DFS: %fs\n", t);
     media += t;
     // printf("Iniciar BFS? \n");
     // scanf("%c\n", &a);
@@ -34,6 +34,6 @@ int main() {
     scanf("%c", &a);
     printf("\n\n");
   }
-  printf("Média dos tempos: %f\n", media/4.0);
+  printf("-> Média dos tempos: %f\n", media/4.0);
   return 0;
 }
