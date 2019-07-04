@@ -6,12 +6,14 @@
 #define _FILA_H_
 #endif
 
-int criarGrafo(int t, int grafo[t][t], float conec);
+int criarGrafo(int t, int **grafo, float conec);
 
-void mostrarGrafo(int t, int grafo[t][t]);
+void mostrarGrafo(int t, int **grafo);
 
-int alterarConectividade(int t, int grafo[t][t], float conec);
+int alterarConectividade(int t, int **grafo, float conec);
 
-char DFS(int t, int grafo[t][t], int inicio, char printar);
+char acharTodosCaminhos(int t, int **grafo, int inicio, char printar);
 
-void BFS(int t, int grafo[t][t], int inicio, char printar);
+void DFS(int t, int **grafo, int inicio, char printar);
+
+void BFS(int t, int **grafo, int inicio, char printar);

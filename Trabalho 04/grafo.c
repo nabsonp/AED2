@@ -8,7 +8,7 @@
 #define reset   "\x1b[0m"
 #define azul    "\x1b[36m"
 
-int criarGrafo(int t, int grafo[t][t], float conec) {
+int criarGrafo(int t, int **grafo, float conec) {
     int qtd = 0, i, j, cnt = 0;
     for (i=1; i<t; i++) qtd += i;
     qtd *= conec;
@@ -31,7 +31,7 @@ int criarGrafo(int t, int grafo[t][t], float conec) {
     return cnt;
 }
 
-void mostrarGrafo(int t, int grafo[t][t]) {
+void mostrarGrafo(int t, int **grafo) {
     printf("-> Grafo com %d vértices:\n\t  ", t);
     for (int i=0; i<t; i++) printf(azul "%d " reset,i);
     for (int i=0; i<t; i++) {
@@ -44,7 +44,7 @@ void mostrarGrafo(int t, int grafo[t][t]) {
     printf("\n");
 }
 
-int alterarConectividade(int t, int grafo[t][t], float conec) {
+int alterarConectividade(int t, int **grafo, float conec) {
   int qtd = 0, i, j, cnt = 0;
   for (i=1; i<t; i++) qtd += i;
   qtd *= conec;
@@ -62,7 +62,7 @@ int alterarConectividade(int t, int grafo[t][t], float conec) {
   return cnt;
 }
 
-int DFS_rec(int t, int grafo[t][t], int inicio, int ant, char cor[], char *ciclo, char printar) {
+int DFS_todos(int t, int **grafo, int inicio, int ant, char cor[], char *ciclo, char printar) {
   int bt = 0;
   if (printar) printf("%d ", inicio);
   for (int i=0; i<t; i++) {
@@ -70,7 +70,7 @@ int DFS_rec(int t, int grafo[t][t], int inicio, int ant, char cor[], char *ciclo
       if (cor[i] == 0) {
         cor[i] = 1; // Pinta de cinza
         if (printar && bt) printf("\n\t\t... %d ", inicio); // Backtracking
-        DFS_rec(t, grafo, i, inicio, cor, ciclo, printar);
+        DFS_todos(t, grafo, i, inicio, cor, ciclo, printar);
         cor[i] = 0;
         bt = 1;
       } else if (i != ant && i != inicio) *ciclo = 83; // Achou um ciclo
@@ -79,20 +79,43 @@ int DFS_rec(int t, int grafo[t][t], int inicio, int ant, char cor[], char *ciclo
   cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
 }
 
-char DFS(int t, int grafo[t][t], int inicio, char printar) {
+char acharTodosCaminhos(int t, int **grafo, int inicio, char printar) {
   int i;
   char cor[t], *ciclo = (char*) malloc(sizeof(char));
   *ciclo = 78;
   printf("\n\t\t");
   for (i=0; i<t; i++) cor[i] = 0; // Colore todos de branco
   cor[inicio] = 1;
-  DFS_rec(t, grafo, inicio, inicio, cor, ciclo, printar); // Realiza a DFS recursivamente
+  DFS_todos(t, grafo, inicio, inicio, cor, ciclo, printar); // Realiza a DFS recursivamente
   i = *ciclo;
   free(ciclo);
   return i;
 }
 
-void BFS(int t, int grafo[t][t], int inicio, char printar) {
+int DFS_rec(int t, int **grafo, int inicio, char cor[], char printar) {
+  int bt = 0;
+  if (printar) printf("%d ", inicio);
+  for (int i=0; i<t; i++) {
+    if (grafo[inicio][i] == 1 && cor[i] == 0) {
+      cor[i] = 1; // Pinta de cinza
+      if (printar && bt) printf("\n\t\t... %d ", inicio); // Backtracking
+      DFS_rec(t, grafo, i, cor, printar);
+      bt = 1;
+    }
+  }
+  cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
+}
+
+void DFS(int t, int **grafo, int inicio, char printar) {
+  int i;
+  char cor[t];
+  printf("\n\t\t");
+  for (i=0; i<t; i++) cor[i] = 0; // Colore todos de branco
+  cor[inicio] = 1;
+  DFS_rec(t, grafo, inicio, cor, printar); // Realiza a DFS recursivamente
+}
+
+void BFS(int t, int **grafo, int inicio, char printar) {
   tipoFila *fila = (tipoFila*) malloc(sizeof(tipoFila));
   int distancia[t], i, prox;
   for (i=0; i<t; i++) distancia[i] = -1;
