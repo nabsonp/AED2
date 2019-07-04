@@ -62,36 +62,37 @@ int alterarConectividade(int t, int grafo[t][t], float conec) {
   return cnt;
 }
 
-int DFS_rec(int t, int grafo[t][t], int inicio, char cor[], char *ciclo) {
-  int bt = 0, aux = 0;
-  printf("%d ", inicio);
+int DFS_rec(int t, int grafo[t][t], int inicio, int ant, char cor[], char *ciclo, char printar) {
+  int bt = 0;
+  if (printar) printf("%d ", inicio);
   for (int i=0; i<t; i++) {
-    if (grafo[inicio][i] == 1 && cor[i] == 0) {
-      cor[i] = 1; // Pinta de cinza
-      if (bt) printf("\n\t\t... %d ", inicio); // Backtracking
-      DFS_rec(t, grafo, i, cor, ciclo);
-      cor[i] = 0;
-      bt = 1;
+    if (grafo[inicio][i] == 1) {
+      if (cor[i] == 0) {
+        cor[i] = 1; // Pinta de cinza
+        if (printar && bt) printf("\n\t\t... %d ", inicio); // Backtracking
+        DFS_rec(t, grafo, i, inicio, cor, ciclo, printar);
+        cor[i] = 0;
+        bt = 1;
+      } else if (i != ant && i != inicio) *ciclo = 83; // Achou um ciclo
     }
-    if (grafo[inicio][i] == 1 && cor[i] != 0) if (aux == 1) *ciclo = 83; else aux = 1;
   }
   cor[inicio] = 2; // Já passou por todos os adjacentes, então pinta de preto
 }
 
-char DFS(int t, int grafo[t][t], int inicio) {
+char DFS(int t, int grafo[t][t], int inicio, char printar) {
   int i;
   char cor[t], *ciclo = (char*) malloc(sizeof(char));
   *ciclo = 78;
   printf("\n\t\t");
   for (i=0; i<t; i++) cor[i] = 0; // Colore todos de branco
   cor[inicio] = 1;
-  DFS_rec(t, grafo, inicio, cor, ciclo); // Realiza a DFS recursivamente
+  DFS_rec(t, grafo, inicio, inicio, cor, ciclo, printar); // Realiza a DFS recursivamente
   i = *ciclo;
   free(ciclo);
   return i;
 }
 
-void BFS(int t, int grafo[t][t], int inicio) {
+void BFS(int t, int grafo[t][t], int inicio, char printar) {
   tipoFila *fila = (tipoFila*) malloc(sizeof(tipoFila));
   int distancia[t], i, prox;
   for (i=0; i<t; i++) distancia[i] = -1;
@@ -107,9 +108,11 @@ void BFS(int t, int grafo[t][t], int inicio) {
     }
     prox = desenfileirar(fila);
   }
-  printf("\n\t\tVértices:   "azul);
-  for (i=0; i<t; i++) printf("%d ",i);
-  printf(reset "\n\t\tDistâncias: "verde);
-  for (i=0; i<t; i++) printf("%d ",distancia[i]);
-  printf(reset);
+  if (printar) {
+    printf("\n\t\tVértices:   "azul);
+    for (i=0; i<t; i++) printf("%d ",i);
+    printf(reset "\n\t\tDistâncias: "verde);
+    for (i=0; i<t; i++) printf("%d ",distancia[i]);
+    printf(reset);
+  }
 }

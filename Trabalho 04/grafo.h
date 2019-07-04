@@ -12,6 +12,6 @@ void mostrarGrafo(int t, int grafo[t][t]);
 
 int alterarConectividade(int t, int grafo[t][t], float conec);
 
-char DFS(int t, int grafo[t][t], int inicio);
+char DFS(int t, int grafo[t][t], int inicio, char printar);
 
-void BFS(int t, int grafo[t][t], int inicio);
+void BFS(int t, int grafo[t][t], int inicio, char printar);

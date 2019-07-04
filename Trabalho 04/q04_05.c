@@ -16,10 +16,10 @@ int main() {
     mostrarGrafo(tam,grafo1);
     printf("\t -> %d arestas setadas (%.1f%% de conectividade).\n\n", n, conec*100);
     printf("\t------------- DFS -------------");
-    ciclo = DFS(tam,grafo1,0);
+    ciclo = DFS(tam,grafo1,0,1);
     printf("\n\t   -> Ciclo? %c",ciclo);
     printf("\n\n\t------------- BFS -------------");
-    BFS(tam,grafo1,0);
+    BFS(tam,grafo1,0,1);
     printf("\n\n");
   }
 
@@ -33,10 +33,10 @@ int main() {
     mostrarGrafo(tam,grafo2);
     printf("\t -> %d arestas setadas (%.1f%% de conectividade).\n\n", n, conec*100);
     printf("\t------------- DFS -------------");
-    ciclo = DFS(tam,grafo2,0);
+    ciclo = DFS(tam,grafo2,0,1);
     printf("\n\t   -> Ciclo? %c",ciclo);
     printf("\n\n\t------------- BFS -------------");
-    BFS(tam,grafo2,0);
+    BFS(tam,grafo2,0,1);
     printf("\n\n");
   }
 
@@ -50,10 +50,10 @@ int main() {
     mostrarGrafo(tam,grafo3);
     printf("\t -> %d arestas setadas (%.1f%% de conectividade).\n\n", n, conec*100);
     printf("\t------------- DFS -------------");
-    ciclo = DFS(tam,grafo3,0);
+    ciclo = DFS(tam,grafo3,0,1);
     printf("\n\t   -> Ciclo? %c",ciclo);
     printf("\n\n\t------------- BFS -------------");
-    BFS(tam,grafo3,0);
+    BFS(tam,grafo3,0,1);
     printf("\n\n");
   }
   return 0;
